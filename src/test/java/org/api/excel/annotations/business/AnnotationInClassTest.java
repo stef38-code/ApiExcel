@@ -15,25 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AnnotationInClassTest {
 
 
-
-    /**
-     * Method under test: {@link AnnotationInClass#isFieldAnnotationPresent(Class, Class)}
-     */
-    @Test
-    void isFieldAnnotationPresent_then_FieldNotAnnoation_when_false() {
-        Class<Object> tClass = Object.class;
-        assertThat(AnnotationInClass.isFieldAnnotationPresent(tClass, Annotation.class)).isFalse();
-    }
-
-    /**
-     * Method under test: {@link AnnotationInClass#isFieldAnnotationPresent(Class, Class)}
-     */
-    @Test
-    void isFieldAnnotationPresent_then_FieldAnnoation_when_false() {
-        Class<MyTest2> tClass = MyTest2.class;
-        AnnotationInClass.isFieldAnnotationPresent(tClass, NotNull.class);
-    }
-
     /**
      * Method under test: {@link AnnotationInClass#getClassAnnotation(Class, Class)}
      */
@@ -55,7 +36,7 @@ class AnnotationInClassTest {
     @Test
     void getFieldContainAnnotation() {
         Class<Object> tClass = Object.class;
-        assertThat(AnnotationInClass.getFieldContainAnnotation(tClass, Annotation.class).isEmpty()).isTrue();
+        assertThat(AnnotationInClass.getFieldContainAnnotation(tClass, Annotation.class)).isNotPresent();
     }
 
     /**
@@ -65,8 +46,9 @@ class AnnotationInClassTest {
     void getFieldContainAnnotation_then_TwoFieldWithAnAnnotation_when_sizeTwo() {
         Class<MyTest2> tClass = MyTest2.class;
 
-        List<Field> fields = AnnotationInClass.getFieldContainAnnotation(tClass, NotNull.class);
-        assertThat(fields).isNotEmpty().hasSize(2);
+        Optional<List<Field>> fields = AnnotationInClass.getFieldContainAnnotation(tClass, NotNull.class);
+        assertThat(fields).isPresent().containsInstanceOf(List.class);
+        assertThat(fields.get()).isNotNull().hasSize(2);
     }
     @Deprecated
     private class MyTest{
