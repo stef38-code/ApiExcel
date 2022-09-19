@@ -19,7 +19,7 @@ class CellModelTest {
      */
     @Test
     void build_then_noProperties_when_NullPointerException() {
-        Assertions.assertThatThrownBy(() -> CellModel.builder().build())
+        Assertions.assertThatThrownBy(CellModel.builder()::build)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("the field cannot is null");
     }
@@ -34,7 +34,7 @@ class CellModelTest {
     @Test
     void build_then_fieldNotAnnatation_when_NullPointerException() throws NoSuchFieldException {
         Field actualField = MyClass.class.getField("name");
-        Assertions.assertThatThrownBy(() -> CellModel.builder().field(actualField).build())
+        Assertions.assertThatThrownBy(CellModel.builder().field(actualField)::build)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("the annotation cannot is null");
     }
@@ -57,11 +57,11 @@ class CellModelTest {
         Assertions.assertThat(build.getField()).isNotNull();
     }
 
-    private class MyClass {
+    private static class MyClass {
         public String name;
     }
 
-    private class MyClass2 {
+    private static class MyClass2 {
         @ExcelCell
         public String name;
     }

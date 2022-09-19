@@ -107,3 +107,4 @@ fabric.properties
 /.idea/git_toolbox_prj.xml
 /target/
 /.idea/CoverUsage.xml
+!/src/

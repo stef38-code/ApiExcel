@@ -8,16 +8,16 @@ import org.api.excel.model.SheetModel;
 import org.api.excel.utils.PreconditionsUtils;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ModelMapper {
+    private static ModelMapper instance = null;
+
     private ModelMapper() {
     }
-    private static ModelMapper instance = null;
 
     public static ModelMapper getInstance() {
         if (Objects.isNull(instance)) {
@@ -26,22 +26,26 @@ public class ModelMapper {
 
         return instance;
     }
-    public SheetModel to(Class<?> clazz){
+
+    public SheetModel to(Class<?> clazz) {
         Optional<ExcelSheet> classAnnotation = AnnotationInClass.getClassAnnotation(clazz, ExcelSheet.class);
         Optional<List<Field>> fieldContainAnnotation = AnnotationInClass.getFieldContainAnnotation(clazz, ExcelCell.class);
         //
-        PreconditionsUtils.requireNonNull(classAnnotation,"ExcelSheet annotation not found");
-        PreconditionsUtils.requireNonNull(fieldContainAnnotation,"No fields found with ExcelCell annotation");
+        PreconditionsUtils.requireNonNull(classAnnotation, "ExcelSheet annotation not found");
+        PreconditionsUtils.requireNonNull(fieldContainAnnotation, "No fields found with ExcelCell annotation");
         //
         return SheetModel.builder()
-                .sheetAnnotation(classAnnotation.get())
+                .sheetAnnotation(classAnnotation.orElse(null))
                 .cellModels(
-                        to(fieldContainAnnotation.get())).build();
+                        to(fieldContainAnnotation.orElse(null))).build();
     }
-    public CellModel to(Field field){
+
+    private CellModel to(Field field) {
         return CellModel.builder().field(field).build();
     }
-    public List<CellModel> to(List<Field> fields){
-        return fields.stream().map( field -> CellModel.builder().field(field).build()).collect(Collectors.toList());
+
+    private List<CellModel> to(List<Field> fields) {
+        Objects.requireNonNull(fields,"No fields found");
+        return fields.stream().map(this::to).collect(Collectors.toList());
     }
 }

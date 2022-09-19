@@ -28,7 +28,7 @@ class AnnotationExcelCellTest {
         assertThat(fields).isNotEmpty().hasSize(1);
         Field fieldName = fields.get(0);
         assertThat(fieldName.getName()).isEqualTo("name");
-        assertThat(fieldName.getAnnotation(ExcelCell.class).number()).isEqualTo(0);
+        assertThat(fieldName.getAnnotation(ExcelCell.class).number()).isZero();
         assertThat(fieldName.getAnnotation(ExcelCell.class).stringFormat()).isFalse();
     }
 

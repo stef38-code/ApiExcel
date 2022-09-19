@@ -18,10 +18,10 @@ public class AnnotationInClass {
      * @param tClass source class
      * @param aClass annotation
      * @return Optional <ANNOTATION> class
-     * @param <CLASS>
+     * @param <C1>
      * @param <ANNOTATION>
      */
-    public static <CLASS, ANNOTATION extends Annotation> Optional<ANNOTATION> getClassAnnotation(Class<CLASS> tClass, Class<ANNOTATION> aClass) {
+    public static <C1, ANNOTATION extends Annotation> Optional<ANNOTATION> getClassAnnotation(Class<C1> tClass, Class<ANNOTATION> aClass) {
         return Optional.ofNullable(tClass.getAnnotation(aClass));
     }
 

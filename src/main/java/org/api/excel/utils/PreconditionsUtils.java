@@ -1,7 +1,5 @@
 package org.api.excel.utils;
 
-import org.api.excel.annotations.ExcelSheet;
-
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
@@ -11,6 +9,7 @@ public class PreconditionsUtils {
     private PreconditionsUtils() {
         throw new UnsupportedOperationException("CollectionUtils is a utility class and cannot be instantiated");
     }
+
     private static <T> void requireNonEmpty(T object, Predicate<T> predicate, String msgToCaller) {
         Objects.requireNonNull(predicate);
         if (predicate.test(object)) {
@@ -24,7 +23,7 @@ public class PreconditionsUtils {
     }
 
     public static void requireNonNull(Optional<?> classAnnotation, String msg) {
-        if (! classAnnotation.isPresent()) {
+        if (!classAnnotation.isPresent()) {
             throw new IllegalArgumentException(msg);
         }
     }
