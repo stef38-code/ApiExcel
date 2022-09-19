@@ -1,7 +1,7 @@
 package org.api.excel.model;
 
 import org.api.excel.annotations.ExcelSheet;
-import org.api.excel.utils.CollectionUtils;
+import org.api.excel.utils.PreconditionsUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +11,9 @@ public class SheetModel {
     private final List<CellModel> cellModels;
 
     private SheetModel(Builder builder) {
+        Objects.requireNonNull( builder.sheetAnnotation, "the annotation cannot is null");
+        PreconditionsUtils.requireNotEmpty( builder.cellModels, "the Collection cannot be empty");
+
         this.sheetAnnotation = builder.sheetAnnotation;
         this.cellModels = builder.cellModels;
     }
@@ -41,14 +44,12 @@ public class SheetModel {
         }
 
         public Builder cellModels(List<CellModel> cellModels) {
-
-            this.cellModels = cellModels;
+           this.cellModels = cellModels;
             return this;
         }
 
         public SheetModel build() {
-            Objects.requireNonNull(sheetAnnotation, "the annotation cannot is null");
-            CollectionUtils.requireNotEmpty(cellModels, "the Collection cannot be empty");
+
             return new SheetModel(this);
         }
     }

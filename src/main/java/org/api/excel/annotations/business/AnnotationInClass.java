@@ -33,7 +33,7 @@ public class AnnotationInClass {
      * @param <CLASS>
      * @param <ANNOTATION>
      */
-    protected static <CLASS, ANNOTATION extends Annotation> Optional<List<Field>> getFieldContainAnnotation(Class<CLASS> tClass, Class<ANNOTATION> aClass) {
+    public static <CLASS, ANNOTATION extends Annotation> Optional<List<Field>> getFieldContainAnnotation(Class<CLASS> tClass, Class<ANNOTATION> aClass) {
         List<Field> fields = Stream.of(tClass.getDeclaredFields())
                 .filter(field -> Objects.nonNull(field.getAnnotation(aClass)))
                 .collect(Collectors.toList());

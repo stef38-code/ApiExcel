@@ -10,6 +10,8 @@ public class CellModel {
     private final ExcelCell annotation;
 
     private CellModel(Builder builder) {
+        Objects.requireNonNull( builder.field,"the field cannot is null");
+        Objects.requireNonNull( builder.annotation,"the annotation cannot is null");
         this.field = builder.field;
         this.annotation = builder.annotation;
     }
@@ -21,7 +23,9 @@ public class CellModel {
     public ExcelCell getAnnotation() {
         return annotation;
     }
-
+    public static Builder builder() {
+        return new Builder();
+    }
     public static final class Builder {
 
         private Field field;
@@ -31,14 +35,12 @@ public class CellModel {
         }
 
         public Builder field(Field field) {
-            Objects.requireNonNull(field,"the field cannot is null");
+            this.annotation = field.getAnnotation(ExcelCell.class);
             this.field = field;
             return this;
         }
 
         public CellModel build() {
-            this.annotation = field.getAnnotation(ExcelCell.class);
-            Objects.requireNonNull(field,"the annotation cannot is null");
             return new CellModel(this);
         }
     }
