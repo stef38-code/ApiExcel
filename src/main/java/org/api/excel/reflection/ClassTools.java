@@ -10,17 +10,21 @@ import java.lang.reflect.InvocationTargetException;
 public class ClassTools {
     private static final Logger log = LoggerFactory.getLogger(ClassTools.class);
 
-    public static <T> T newInstance(Class<T> tclass) throws IllegalAccessException {
+    private ClassTools() {
+        throw new UnsupportedOperationException("ClassTools is a utility class and cannot be instantiated");
+    }
+
+    public static <T> T createInstance(Class<T> tclass) throws ReflectiveOperationException {
         try {
             return tclass.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                  NoSuchMethodException e) {
             log.error("Erreur creation nouvelle instance", e);
-            throw new IllegalAccessException("Cannot create instance :" + tclass.getSimpleName());
+            throw new ReflectiveOperationException("Cannot create instance :" + tclass.getSimpleName());
         }
     }
 
-    public static <T> void setterField(T tclass, String nameField, Object value) throws IllegalAccessException {
+    public static <T> void setterField(T tclass, String nameField, Object value) throws ReflectiveOperationException {
 
         try {
             PropertyDescriptor pd = new PropertyDescriptor(nameField, tclass.getClass());
@@ -28,7 +32,7 @@ public class ClassTools {
         } catch (IllegalArgumentException | InvocationTargetException | IntrospectionException |
                  IllegalAccessException e) {
             log.error("Erreur setter", e);
-            throw new IllegalAccessException("Cannot set :" + nameField);
+            throw new ReflectiveOperationException("Cannot set :" + nameField);
         }
     }
 }
