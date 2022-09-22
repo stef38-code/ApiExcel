@@ -36,9 +36,9 @@ class ClassToolsTest {
      * Method under test: {@link ClassTools#setterField(Object, String, Object)}
      */
     @Test
-    void setterField_then_stringObject_when_IllegalAccessException() {
-        Assertions.assertThatThrownBy(() -> ClassTools.setterField("Tclass", "Name Field", "Value"))
-                .isInstanceOf(IllegalAccessException.class)
+    void setterField_then_stringObject_when_ReflectiveOperationException() {
+        Assertions.assertThatThrownBy(() -> ClassTools.setterField("Tclass", "NameField", "Value"))
+                .isInstanceOf(ReflectiveOperationException.class)
                 .hasMessageContaining("Cannot set");
     }
     /**

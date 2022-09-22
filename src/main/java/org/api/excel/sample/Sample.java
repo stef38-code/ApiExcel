@@ -14,6 +14,7 @@ public class Sample {
     @ExcelCell
     private int age;
     private LocalDate toDay;
+    private String stringValue;
 
     public LocalDate getToDay() {
         return toDay;

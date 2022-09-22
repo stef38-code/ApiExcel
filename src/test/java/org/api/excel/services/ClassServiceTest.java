@@ -6,13 +6,32 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 class ClassServiceTest {
     @Test
     void buildInstance() {
         ClassService<Sample> service = ClassService.clazz(Sample.class).build();
-        Assertions.assertThat(service).isNotNull();
-        Assertions.assertThat(service.getClazz()).isNotNull().isInstanceOf(Sample.class);
+        assertThat(service).isNotNull();
+        assertThat(service.getClazz()).isNotNull().isInstanceOf(Sample.class);
     }
+
+    @Test
+    void newInstance_Lorsque_PrivateContructeur_Attend_ClassServiceException() {
+        Assertions.assertThatThrownBy(() -> ClassService.clazz(ClassService.class).build())
+                .isInstanceOf(ClassServiceException.class)
+                .hasMessage("Cannot create instance :ClassService");
+    }
+
+    @Test
+    void setField_FielNoSettable_Exception() {
+        Assertions.assertThatThrownBy(() ->  ClassService.clazz(Sample.class)
+                .field("stringValue","John")
+                .build())
+                .isInstanceOf(ClassServiceException.class)
+                .hasMessage("Cannot set :stringValue");
+    }
+
     @Test
     void setField() {
         ClassService<Sample> service = ClassService.clazz(Sample.class)
@@ -21,11 +40,12 @@ class ClassServiceTest {
                 .field("age",1)
                 .field("toDay", LocalDate.now())
                 .build();
-        Assertions.assertThat(service).isNotNull();
+        assertThat(service).isNotNull();
         Sample actual = service.getClazz();
-        Assertions.assertThat(actual).isNotNull().isInstanceOf(Sample.class);
-        Assertions.assertThat(actual.getFirstname()).isNotEmpty().hasToString("John");
-        Assertions.assertThat(actual.getLastname()).isNotEmpty().hasToString("Doe");
-        Assertions.assertThat(actual.getAge()).isEqualTo(1);
+        assertThat(actual).isNotNull().isInstanceOf(Sample.class);
+        assertThat(actual.getFirstname()).isNotEmpty().hasToString("John");
+        assertThat(actual.getLastname()).isNotEmpty().hasToString("Doe");
+        assertThat(actual.getAge()).isEqualTo(1);
     }
+
 }

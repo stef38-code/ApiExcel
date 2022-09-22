@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 
 public class PreconditionsUtils {
     private PreconditionsUtils() {
-        throw new UnsupportedOperationException("CollectionUtils is a utility class and cannot be instantiated");
+        throw new UnsupportedOperationException("PreconditionsUtils is a utility class and cannot be instantiated");
     }
 
     private static <T> void requireNonEmpty(T object, Predicate<T> predicate, String msgToCaller) {
