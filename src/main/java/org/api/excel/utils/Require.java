@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 public class Require {
-    private Require() {
+    Require() {
         throw new UnsupportedOperationException("Require is a utility class and cannot be instantiated");
     }
     protected static <T> void execute(T object, Predicate<T> predicate, String msgToCaller) {

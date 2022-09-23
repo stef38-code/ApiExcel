@@ -6,15 +6,15 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * The type Conditions.
  */
 public class Conditions extends Require{
-    private Conditions() {
-        throw new UnsupportedOperationException("PreconditionsUtils is a utility class and cannot be instantiated");
-    }
-
+private Conditions() {
+    super();
+}
 
     /**
      * Require not empty.
@@ -23,7 +23,7 @@ public class Conditions extends Require{
      * @param collection the collection
      * @param msg        the msg
      */
-    public static <T> void requireNotBlank(Collection<T> collection, String msg) {
+    public static <T> void requireNotEmpty(Collection<T> collection, String msg) {
         Objects.requireNonNull(collection, "the Collection cannot be null");
         execute(collection, Collection::isEmpty, msg);
     }
@@ -46,8 +46,8 @@ public class Conditions extends Require{
      *
      * @param stringValue the string value
      */
-    public static void requireNotBlank(String stringValue) {
-        execute(stringValue, StringUtils::isNotBlank, "String not may be blank");
+    public static void requireNotEmpty(String stringValue) {
+        execute(stringValue, StringUtils::isBlank, "String not may be blank");
     }
 
     /**
@@ -57,7 +57,7 @@ public class Conditions extends Require{
      * @return
      */
     public static File requireFileAndExists(String stringValue) {
-        requireNotBlank(stringValue);
+        requireNotEmpty(stringValue);
         File file = new File(stringValue);
         requireIsFile(file);
         requireExists(file);
@@ -71,7 +71,7 @@ public class Conditions extends Require{
      */
     public static void requireExists(File file) {
         Objects.requireNonNull(file,"the file cannot be null");
-        execute(file,File::exists,"File or directory not exist");
+        execute(file,Predicate.not(File::exists),"File or directory not exist");
     }
 
     /**
@@ -81,6 +81,6 @@ public class Conditions extends Require{
      */
     public static void requireIsFile(File file) {
         Objects.requireNonNull(file,"File cannot be null");
-        execute(file,File::isFile,"File not exist");
+        execute(file,Predicate.not(File::isFile),"Is not file");
     }
 }

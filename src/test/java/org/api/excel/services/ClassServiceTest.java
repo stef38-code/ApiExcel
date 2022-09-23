@@ -39,11 +39,12 @@ class ClassServiceTest {
     @Test
     void setField() {
         ClassService.Builder<Sample> builder = ClassService.clazz(Sample.class);
+        LocalDate now = LocalDate.now();
         builder
                 .field("firstname","John")
                 .field("lastname","Doe")
                 .field("age",1)
-                .field("toDay", LocalDate.now());
+                .field("toDay", now);
         ClassService<Sample> service = builder
                 .build();
         assertThat(service).isNotNull();
@@ -52,6 +53,7 @@ class ClassServiceTest {
         assertThat(actual.getFirstname()).isNotEmpty().hasToString("John");
         assertThat(actual.getLastname()).isNotEmpty().hasToString("Doe");
         assertThat(actual.getAge()).isEqualTo(1);
+        assertThat(actual.getToDay()).isEqualTo(now);
     }
 
 }

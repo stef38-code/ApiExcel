@@ -12,7 +12,7 @@ public class SheetModel {
 
     private SheetModel(Builder builder) {
         Objects.requireNonNull( builder.sheetAnnotation, "the annotation cannot is null");
-        Conditions.requireNotBlank( builder.cellModels, "the Collection cannot be empty");
+        Conditions.requireNotEmpty( builder.cellModels, "the Collection cannot be empty");
 
         this.sheetAnnotation = builder.sheetAnnotation;
         this.cellModels = builder.cellModels;
