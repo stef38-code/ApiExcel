@@ -18,10 +18,10 @@ public class AnnotationInClass {
      * @param tClass source class
      * @param aClass annotation
      * @return Optional <ANNOTATION> class
-     * @param <C1>
-     * @param <ANNOTATION>
+     * @param <C>
+     * @param <A>
      */
-    public static <C1, ANNOTATION extends Annotation> Optional<ANNOTATION> getClassAnnotation(Class<C1> tClass, Class<ANNOTATION> aClass) {
+    public static <C, A extends Annotation> Optional<A> getClassAnnotation(Class<C> tClass, Class<A> aClass) {
         return Optional.ofNullable(tClass.getAnnotation(aClass));
     }
 
@@ -30,10 +30,10 @@ public class AnnotationInClass {
      * @param tClass source class
      * @param aClass annotation
      * @return Optional List<Field>
-     * @param <CLASS>
-     * @param <ANNOTATION>
+     * @param <C>
+     * @param <A>
      */
-    public static <CLASS, ANNOTATION extends Annotation> Optional<List<Field>> getFieldContainAnnotation(Class<CLASS> tClass, Class<ANNOTATION> aClass) {
+    public static <C, A extends Annotation> Optional<List<Field>> getFieldContainAnnotation(Class<C> tClass, Class<A> aClass) {
         List<Field> fields = Stream.of(tClass.getDeclaredFields())
                 .filter(field -> Objects.nonNull(field.getAnnotation(aClass)))
                 .collect(Collectors.toList());

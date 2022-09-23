@@ -7,38 +7,44 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ClassServiceTest {
     @Test
     void buildInstance() {
-        ClassService<Sample> service = ClassService.clazz(Sample.class).build();
+        ClassService.Builder<Sample> builder = ClassService.clazz(Sample.class);
+        ClassService<Sample> service = builder.build();
         assertThat(service).isNotNull();
         assertThat(service.getClazz()).isNotNull().isInstanceOf(Sample.class);
     }
 
     @Test
     void newInstance_Lorsque_PrivateContructeur_Attend_ClassServiceException() {
-        Assertions.assertThatThrownBy(() -> ClassService.clazz(ClassService.class).build())
+        ClassService.Builder<Sample> builder = ClassService.clazz(ClassService.class);
+        assertThatThrownBy(() -> builder.build())
                 .isInstanceOf(ClassServiceException.class)
                 .hasMessage("Cannot create instance :ClassService");
     }
 
     @Test
     void setField_FielNoSettable_Exception() {
-        Assertions.assertThatThrownBy(() ->  ClassService.clazz(Sample.class)
-                .field("stringValue","John")
-                .build())
+        ClassService.Builder<Sample> builder = ClassService.clazz(Sample.class);
+        builder
+                .field("stringValue","John");
+        assertThatThrownBy(builder::build)
                 .isInstanceOf(ClassServiceException.class)
                 .hasMessage("Cannot set :stringValue");
     }
 
     @Test
     void setField() {
-        ClassService<Sample> service = ClassService.clazz(Sample.class)
+        ClassService.Builder<Sample> builder = ClassService.clazz(Sample.class);
+        builder
                 .field("firstname","John")
                 .field("lastname","Doe")
                 .field("age",1)
-                .field("toDay", LocalDate.now())
+                .field("toDay", LocalDate.now());
+        ClassService<Sample> service = builder
                 .build();
         assertThat(service).isNotNull();
         Sample actual = service.getClazz();

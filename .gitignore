@@ -108,3 +108,4 @@ fabric.properties
 /target/
 /.idea/CoverUsage.xml
 !/src/
+/.idea/intellij-javadocs-4.0.1.xml

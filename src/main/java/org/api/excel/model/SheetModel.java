@@ -1,7 +1,7 @@
 package org.api.excel.model;
 
 import org.api.excel.annotations.ExcelSheet;
-import org.api.excel.utils.PreconditionsUtils;
+import org.api.excel.utils.Conditions;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +12,7 @@ public class SheetModel {
 
     private SheetModel(Builder builder) {
         Objects.requireNonNull( builder.sheetAnnotation, "the annotation cannot is null");
-        PreconditionsUtils.requireNotEmpty( builder.cellModels, "the Collection cannot be empty");
+        Conditions.requireNotBlank( builder.cellModels, "the Collection cannot be empty");
 
         this.sheetAnnotation = builder.sheetAnnotation;
         this.cellModels = builder.cellModels;

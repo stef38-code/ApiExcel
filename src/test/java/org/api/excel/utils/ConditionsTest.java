@@ -9,10 +9,10 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-class PreconditionsUtilsTest {
+class ConditionsTest {
     @Test
     void constructeur() throws ClassNotFoundException {
-        Class<?> clazz = Class.forName(PreconditionsUtils.class.getName());
+        Class<?> clazz = Class.forName(Conditions.class.getName());
         Constructor<?>[] constructors = clazz.getDeclaredConstructors();
         constructors[0].setAccessible(true);
         Assertions.assertThatThrownBy(() -> constructors[0].newInstance())
@@ -21,11 +21,11 @@ class PreconditionsUtilsTest {
     }
 
     /**
-     * Method under test: {@link PreconditionsUtils#requireNonNull(Optional, String)}
+     * Method under test: {@link Conditions#requireNonNull(Optional, String)}
      */
     @Test
     void requireNonNull() {
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> PreconditionsUtils.requireNonNull(Optional.empty(), "Msg"));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Conditions.requireNonNull(Optional.empty(), "Msg"));
     }
 }
 

@@ -5,7 +5,7 @@ import org.api.excel.annotations.ExcelSheet;
 import org.api.excel.annotations.business.AnnotationInClass;
 import org.api.excel.model.CellModel;
 import org.api.excel.model.SheetModel;
-import org.api.excel.utils.PreconditionsUtils;
+import org.api.excel.utils.Conditions;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -31,8 +31,8 @@ public class ModelMapper {
         Optional<ExcelSheet> classAnnotation = AnnotationInClass.getClassAnnotation(clazz, ExcelSheet.class);
         Optional<List<Field>> fieldContainAnnotation = AnnotationInClass.getFieldContainAnnotation(clazz, ExcelCell.class);
         //
-        PreconditionsUtils.requireNonNull(classAnnotation, "ExcelSheet annotation not found");
-        PreconditionsUtils.requireNonNull(fieldContainAnnotation, "No fields found with ExcelCell annotation");
+        Conditions.requireNonNull(classAnnotation, "ExcelSheet annotation not found");
+        Conditions.requireNonNull(fieldContainAnnotation, "No fields found with ExcelCell annotation");
         //
         return SheetModel.builder()
                 .sheetAnnotation(classAnnotation.orElse(null))

@@ -1,12 +1,34 @@
 package org.api.excel.services;
 
-import org.api.excel.reflection.ClassTools;
+import org.api.excel.reflection.Reflective;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * The type Class service.
+ *
+ * @param <T> the type parameter
+ *  <pre>{@code
+ *        ClassService.Builder<Sample> builder = ClassService.clazz(Sample.class);
+ *        builder
+ *                 .field("firstname","John")
+ *                 .field("lastname","Doe")
+ *                 .field("age",1)
+ *                 .field("toDay", LocalDate.now());
+ *         ClassService<Sample> service = builder
+ *                 .build();
+ *         assertThat(service.getClazz()).isNotNull().isInstanceOf(Sample.class);
+ *  }</pre>
+ */
 public class ClassService<T> {
+    private static final Logger log = LoggerFactory.getLogger(ClassService.class);
     private final T clazz;
 
     private ClassService(Builder<T> builder) {
-        this.clazz = builder.clazz;
+        this.clazz = builder.instance;
     }
 
     public static <T> Builder clazz(Class<T> clazz) {
@@ -18,31 +40,35 @@ public class ClassService<T> {
     }
 
     public static final class Builder<C> {
-        private C clazz;
-
+        private C instance;
+        private Class<C> cClass;
+        private Map<String,Object> fields ;
         private Builder() {
+            this.fields = new HashMap<>();
         }
 
         public  Builder<C> clazz(Class<C> obj) {
-            try {
-                this.clazz = ClassTools.createInstance(obj);
-            } catch (ReflectiveOperationException e) {
-                throw new ClassServiceException(e.getMessage());
-            }
+            this.cClass = obj;
+            return this;
+        }
+        public Builder<C> field(String name, Object value) {
+            this.fields.put(name,value);
             return this;
         }
 
         public ClassService<C> build() {
-            return new ClassService<>(this);
-        }
-
-        public Builder<C> field(String name, Object value) {
             try {
-                ClassTools.setterField(this.clazz, name,value);
+                log.debug("Create new instance: {}",cClass.getSimpleName());
+                this.instance = Reflective.createInstance(cClass);
+                for (Map.Entry<String,Object> field: fields.entrySet()) {
+                    log.debug("set field: {}, type value: {}", field.getKey(), field.getValue().getClass().getSimpleName());
+                    Reflective.setterField(this.instance, field.getKey(),field.getValue());
+                }
             } catch (ReflectiveOperationException e) {
                 throw new ClassServiceException(e.getMessage());
             }
-            return this;
+            return new ClassService<>(this);
         }
+
     }
 }
