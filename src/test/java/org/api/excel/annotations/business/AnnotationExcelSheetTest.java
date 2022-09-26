@@ -17,7 +17,7 @@ class AnnotationExcelSheetTest {
                 .containsInstanceOf(ExcelSheet.class);
         assertThat(classAnnotation.get().name()).isEmpty();
         assertThat(classAnnotation.get().number()).isZero();
-        assertThat(classAnnotation.get().rowNumber()).isEqualTo(1);
+        assertThat(classAnnotation.get().rowNumber()).isEqualTo(0);
     }
 
     @Test

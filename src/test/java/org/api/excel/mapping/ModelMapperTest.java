@@ -34,7 +34,7 @@ class ModelMapperTest {
         assertThat(sheetAnnotation).isNotNull().isInstanceOf(ExcelSheet.class);
         assertThat(sheetAnnotation.name()).isEmpty();
         assertThat(sheetAnnotation.number()).isZero();
-        assertThat(sheetAnnotation.rowNumber()).isEqualTo(1);
+        assertThat(sheetAnnotation.rowNumber()).isZero();
 
         List<CellModel> cellModels = model.getCellModels();
         assertThat(cellModels).isNotEmpty().hasSize(4);
