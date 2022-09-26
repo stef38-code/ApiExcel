@@ -11,7 +11,6 @@ import org.api.excel.mapping.ModelMapper;
 import org.api.excel.converter.RowConverter;
 import org.api.excel.model.CellModel;
 import org.api.excel.model.SheetModel;
-import org.api.excel.reflection.Reflective;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,13 +49,14 @@ public class ParseExcel<T> {
         }
 
         public Optional<List<T>> build() {
+            traitement();
             List entities = new ParseExcel(this).getEntities();
             return Optional.ofNullable(entities);
         }
 
         public Builder<T> file(String excelFile) {
             files.add(excelFile);
-            traitement();
+
             return this;
         }
 
@@ -69,14 +69,14 @@ public class ParseExcel<T> {
              */
             for (String file : files) {
                 log.info("Traitement: {}", file);
-                try (Workbook workbook = Excel.read(files.get(0))) {
+                try (Workbook workbook = Excel.read(file)) {
                     log.info("Workbook");
                     ExcelSheet sheetAnnotation = sheetModel.getSheetAnnotation();
                     List<CellModel> cellModels = sheetModel.getCellModels();
                     Sheet sheet = Excel.getSheetSelected(sheetAnnotation, workbook);
                     log.info("sheet");
                     log.info("row");
-                    read(sheet.rowIterator(), tClass, cellModels, sheetAnnotation.rowNumber());
+                    readRows(sheet.rowIterator(), tClass, cellModels, sheetAnnotation.rowNumber());
 
                 } catch (ExcelException | IOException e) {
                     throw new RuntimeException(e);
@@ -85,7 +85,7 @@ public class ParseExcel<T> {
 
         }
 
-        private void read(Iterator<Row> rows, Class<T> tClass, List<CellModel> cellModels, int rowNumber) {
+        private void readRows(Iterator<Row> rows, Class<T> tClass, List<CellModel> cellModels, int rowNumber) {
             while (rows.hasNext()) {
                 Row row = rows.next();
                 T entity = rowToEntity(rowNumber, row, tClass, cellModels);

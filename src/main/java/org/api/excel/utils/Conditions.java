@@ -25,7 +25,7 @@ private Conditions() {
      */
     public static <T> void requireNotEmpty(Collection<T> collection, String msg) {
         Objects.requireNonNull(collection, "the Collection cannot be null");
-        execute(collection, Collection::isEmpty, msg);
+        positiveTest(collection, Collection::isEmpty, msg);
     }
 
     /**
@@ -47,7 +47,7 @@ private Conditions() {
      * @param stringValue the string value
      */
     public static void requireNotEmpty(String stringValue) {
-        execute(stringValue, StringUtils::isBlank, "String not may be blank");
+        positiveTest(stringValue, StringUtils::isBlank, "String not may be blank");
     }
 
     /**
@@ -71,7 +71,7 @@ private Conditions() {
      */
     public static void requireExists(File file) {
         Objects.requireNonNull(file,"the file cannot be null");
-        execute(file,Predicate.not(File::exists),"File or directory not exist");
+        negativeTest(file,File::exists,"File or directory not exist");
     }
 
     /**
@@ -81,6 +81,6 @@ private Conditions() {
      */
     public static void requireIsFile(File file) {
         Objects.requireNonNull(file,"File cannot be null");
-        execute(file,Predicate.not(File::isFile),"Is not file");
+        positiveTest(file,Predicate.not(File::isFile),"Is not file");
     }
 }

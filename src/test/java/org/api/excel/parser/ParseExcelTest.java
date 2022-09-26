@@ -24,5 +24,20 @@ class ParseExcelTest {
         List<Personne> personnes = optional.get();
         assertThat(personnes).isNotEmpty().hasSize(30);
     }
-
+    @Test
+    void toEntities_Lorsque_TwoFileExcel_Attend_ListEntities() {
+        //Conditions préalables (given)
+        String excelFile = FileUtil.getAbsolutePath("exemple.xls");
+        String excelFile2 = FileUtil.getAbsolutePath("exemple.xlsx");
+        //Une action se produit (when)
+        Optional<List<Personne>> optional = ParseExcel.clazz(Personne.class)
+                .file(excelFile)
+                .file(excelFile2)
+                .build();
+        //Vérifier la sortie (then)
+        assertThat(optional).isPresent()
+                .containsInstanceOf(List.class);
+        List<Personne> personnes = optional.get();
+        assertThat(personnes).isNotEmpty().hasSize(60);
+    }
 }
