@@ -1,7 +1,6 @@
 package org.api.excel.services;
 
 import org.api.excel.sample.Sample;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -20,8 +19,8 @@ class ClassServiceTest {
 
     @Test
     void newInstance_Lorsque_PrivateContructeur_Attend_ClassServiceException() {
-        ClassService.Builder<Sample> builder = ClassService.clazz(ClassService.class);
-        assertThatThrownBy(() -> builder.build())
+        ClassService.Builder<ClassService> builder = ClassService.<ClassService>clazz(ClassService.class);
+        assertThatThrownBy(builder::build)
                 .isInstanceOf(ClassServiceException.class)
                 .hasMessage("Cannot create instance :ClassService");
     }

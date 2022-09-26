@@ -29,8 +29,8 @@ class ReflectiveTest {
      */
     @Test
     void newInstance_then_DefaultClass_when_DefaultClassInstance() throws ReflectiveOperationException {
-        DefaultClassTest instance = Reflective.createInstance(DefaultClassTest.class);
-        assertThat(instance).isNotNull().isInstanceOf(DefaultClassTest.class);
+        DefaultClass instance = Reflective.createInstance(DefaultClass.class);
+        assertThat(instance).isNotNull().isInstanceOf(DefaultClass.class);
     }
 
     /**
@@ -47,7 +47,7 @@ class ReflectiveTest {
      */
     @Test
     void setterField_then_DefaultClassTest_when_NameChanged() throws ReflectiveOperationException {
-        DefaultClassTest defaultClass = new DefaultClassTest();
+        DefaultClass defaultClass = new DefaultClass();
         Reflective.setterField(defaultClass, "name", "Doe");
         assertThat(defaultClass.getName()).hasToString("Doe");
     }

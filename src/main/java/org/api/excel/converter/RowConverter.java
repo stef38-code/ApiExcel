@@ -29,7 +29,7 @@ public class RowConverter {
         try {
             Reflective.setterField(entity, field.getName(), CellTools.getValue(field.getAnnotation(ExcelCell.class), cell));
         } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e);
+            throw new RowConverterException(e);
         }
     }
     public <T> T toClass(Class<T> tClass, List<CellModel> cellModels, Row row){
@@ -42,7 +42,7 @@ public class RowConverter {
         });
             return entity;
         } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e);
+            throw new RowConverterException(e);
         }
     }
 }

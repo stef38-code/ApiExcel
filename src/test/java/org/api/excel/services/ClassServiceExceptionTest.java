@@ -12,7 +12,7 @@ class ClassServiceExceptionTest {
     void constructor() {
         ClassServiceException actualClassServiceException = new ClassServiceException("An error occurred");
         assertThat(actualClassServiceException.getCause()).isNull();
-        assertThat(actualClassServiceException.getSuppressed().length).isEqualTo(0);
+        assertThat(actualClassServiceException.getSuppressed()).isEmpty();
         assertThat(actualClassServiceException.getMessage()).hasToString("An error occurred");
         assertThat(actualClassServiceException.getLocalizedMessage()).hasToString("An error occurred");
     }

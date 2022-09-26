@@ -31,7 +31,7 @@ public class ClassService<T> {
         this.clazz = builder.instance;
     }
 
-    public static <T> Builder clazz(Class<T> clazz) {
+    public static <T> Builder<T> clazz(Class<T> clazz) {
         return new Builder<T>().clazz(clazz);
     }
 
@@ -42,7 +42,7 @@ public class ClassService<T> {
     public static final class Builder<C> {
         private C instance;
         private Class<C> cClass;
-        private Map<String,Object> fields ;
+        private final Map<String, Object> fields;
         private Builder() {
             this.fields = new HashMap<>();
         }

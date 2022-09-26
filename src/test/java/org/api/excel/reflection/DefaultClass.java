@@ -1,6 +1,6 @@
 package org.api.excel.reflection;
 
-public class DefaultClassTest {
+public class DefaultClass {
     private String name;
 
     public void setName(String name) {

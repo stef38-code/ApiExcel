@@ -1,19 +1,15 @@
 package org.api.excel.utils;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import tools.FileUtil;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class ConditionsTest {
 
@@ -56,7 +52,10 @@ class ConditionsTest {
      */
     @Test
     void requireNonNull() {
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Conditions.requireNonNull(Optional.empty(), "Msg"));
+        Optional<Object> empty = Optional.empty();
+        Assertions.assertThatThrownBy(() -> Conditions.requireNonNull(empty, "Msg"))
+                .isInstanceOf(IllegalArgumentException.class);
+
     }
 
     /**
@@ -75,8 +74,9 @@ class ConditionsTest {
      */
     @Test
     void requireExists() {
-        String file = FileUtil.getAbsolutePath("sample2.txt");
-        Assertions.assertThatThrownBy(() -> Conditions.requireExists(new File(file)))
+        String path = FileUtil.getAbsolutePath("sample2.txt");
+        File file = new File(path);
+        Assertions.assertThatThrownBy(() -> Conditions.requireExists(file))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("File or directory not exist");
     }
@@ -87,8 +87,9 @@ class ConditionsTest {
     @Test
     void requireIsFile_then_directory_when_IllegalArgumentException() {
         String directory = FileUtil.getAbsolutePath("");
+        File file = new File(directory);
 
-        Assertions.assertThatThrownBy(() -> Conditions.requireIsFile(new File(directory)))
+        Assertions.assertThatThrownBy(() -> Conditions.requireIsFile(file))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Is not file");
     }
