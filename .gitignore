@@ -105,7 +105,8 @@ fabric.properties
 /.idea/misc.xml
 /.idea/vcs.xml
 /.idea/git_toolbox_prj.xml
-/target/
+/target
 /.idea/CoverUsage.xml
 !/src/
 /.idea/intellij-javadocs-4.0.1.xml
+/target/

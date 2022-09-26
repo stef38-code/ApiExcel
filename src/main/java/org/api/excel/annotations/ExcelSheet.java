@@ -12,21 +12,21 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExcelSheet {
     /**
-     * Number int.
+     * Sheet Number int.
      *
      * @return the int
      */
     int number() default 0;
 
     /**
-     * Name string.
+     * Sheet Name string.
      *
      * @return the string
      */
     String name() default StringUtils.EMPTY;
 
     /**
-     * Row number int.
+     * header Row number int.
      *
      * @return the int
      */
