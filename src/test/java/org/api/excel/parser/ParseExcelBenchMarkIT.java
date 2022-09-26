@@ -2,7 +2,6 @@ package org.api.excel.parser;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.api.excel.sample.Bench;
-import org.api.excel.sample.Personne;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.slf4j.Logger;
@@ -46,7 +45,7 @@ class ParseExcelBenchMarkIT {
         //Vérifier la sortie (then)
         String excelFile = FileUtil.getAbsolutePath(file);
         //Une action se produit (when)
-        Optional<List<Personne>> list = ParseExcel.clazz(Bench.class)
+        Optional<List<Bench>> list = ParseExcel.clazz(Bench.class)
                 .file(excelFile)
                 .build();
         //
@@ -63,7 +62,7 @@ class ParseExcelBenchMarkIT {
 
         assertThat(list).isPresent()
                 .containsInstanceOf(List.class);
-        List<Personne> personnes = list.get();
+        List<Bench> personnes = list.get();
         assertThat(personnes).isNotEmpty().hasSize(Integer.parseInt(size));
     }
 }

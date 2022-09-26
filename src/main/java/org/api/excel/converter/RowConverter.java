@@ -32,17 +32,20 @@ public class RowConverter {
             throw new RowConverterException(e);
         }
     }
-    public <T> T toClass(Class<T> tClass, List<CellModel> cellModels, Row row){
+
+    public <T> T toClass(Class<T> tClass, List<CellModel> cellModels, Row row) {
         try {
             T entity = Reflective.createInstance(tClass);
-        cellModels.forEach(cellModel -> {
-            Field field = cellModel.getField();
-            Cell cell = row.getCell(field.getAnnotation(ExcelCell.class).number());
-            setField(entity, cellModel.getField(),cell);
-        });
+            cellModels.forEach(cellModel -> this.cellToField(row, entity, cellModel));
             return entity;
         } catch (ReflectiveOperationException e) {
             throw new RowConverterException(e);
         }
+    }
+
+    private <T> void cellToField(Row row, T entity, CellModel cellModel) {
+        Field field = cellModel.getField();
+        Cell cell = row.getCell(field.getAnnotation(ExcelCell.class).number());
+        setField(entity, cellModel.getField(), cell);
     }
 }

@@ -16,13 +16,13 @@ class ParseExcelTest {
         //Conditions préalables (given)
         String excelFile = FileUtil.getAbsolutePath("exemple.xls");
         //Une action se produit (when)
-        Optional<List<Personne>> optional = ParseExcel.clazz(Personne2.class)
+        Optional<List<Personne2>> optional = ParseExcel.clazz(Personne2.class)
                 .file(excelFile)
                 .build();
         //Vérifier la sortie (then)
         assertThat(optional).isPresent()
                 .containsInstanceOf(List.class);
-        List<Personne> personnes = optional.get();
+        List<Personne2> personnes = optional.get();
         assertThat(personnes).isNotEmpty().hasSize(30);
     }
     @Test
