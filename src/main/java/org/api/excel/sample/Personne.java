@@ -5,7 +5,7 @@ import org.api.excel.annotations.ExcelSheet;
 
 @ExcelSheet(name = "Feuil1")
 public class Personne {
-    @ExcelCell
+    @ExcelCell(stringFormat = true)
     private String name;
     @ExcelCell(number =1)
     private String company;
