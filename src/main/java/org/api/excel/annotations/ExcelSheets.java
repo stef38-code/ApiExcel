@@ -9,5 +9,10 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExcelSheets {
+    /**
+     * Value excel sheet [ ].
+     *
+     * @return the excel sheet [ ]
+     */
     ExcelSheet[] value();
 }
