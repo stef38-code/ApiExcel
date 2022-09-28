@@ -10,6 +10,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@Repeatable(ExcelSheets.class)
 public @interface ExcelSheet {
     /**
      * Sheet Number int.

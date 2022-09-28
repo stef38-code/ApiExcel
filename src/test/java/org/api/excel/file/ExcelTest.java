@@ -1,11 +1,10 @@
 package org.api.excel.file;
 
+import org.api.excel.exception.ExcelException;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import tools.FileUtil;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class ExcelTest {
@@ -24,7 +23,7 @@ class ExcelTest {
      * Method under test: {@link Excel#read(String)}
      */
     @Test
-    void read_then_fileNotExiste_when_IllegalArgumentException()   {
+    void read_then_fileNotExiste_when_IllegalArgumentException() {
         assertThatExceptionOfType(IllegalArgumentException.class).
                 isThrownBy(() -> Excel.read("fileNotExiste"))
                 .withMessage("Is not file");

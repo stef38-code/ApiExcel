@@ -1,26 +1,38 @@
-package org.api.excel.file;
+package org.api.excel.converter;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.api.excel.annotations.ExcelCell;
+import org.api.excel.exception.CellConvertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CellTools {
-    private static final Logger log = LoggerFactory.getLogger(CellTools.class);
+import java.util.Objects;
 
-    private CellTools() {
+public class CellConvert {
+    private static final Logger log = LoggerFactory.getLogger(CellConvert.class);
+    private static CellConvert instance = null;
+
+    private CellConvert() {
     }
 
-    public static Object getValue(ExcelCell annotation, Cell cell) {
+    public static CellConvert getInstance() {
+        if (Objects.isNull(instance)) {
+            instance = new CellConvert();
+        }
+
+        return instance;
+    }
+
+    public Object value(ExcelCell annotation, Cell cell) {
         if (annotation.stringFormat()) {
             return returnStringValue(cell);
         }
         return returnValue(cell);
     }
 
-    private static Object returnValue(Cell cell) {
+    private Object returnValue(Cell cell) {
         log.debug("ObjectValue -> type de cellule {} ", cell.getCellType());
         CellType cellType = cell.getCellType();
         switch (cellType) {
@@ -41,11 +53,11 @@ public class CellTools {
             case BOOLEAN:
                 return cell.getBooleanCellValue();
             default:
-                return "error decoding string value of the cell";
+                throw new CellConvertException("Decoding value of the cell", cell);
         }
     }
 
-    public static String returnStringValue(Cell cell) {
+    public String returnStringValue(Cell cell) {
         log.debug("stringValue -> type de cellule {} value {}", cell.getCellType(), cell);
         CellType cellType = cell.getCellType();
 
@@ -64,7 +76,7 @@ public class CellTools {
             case BOOLEAN:
                 return String.valueOf(cell.getBooleanCellValue());
             default:
-                return "error decoding string value of the cell";
+                throw new CellConvertException("decoding string value of the cell", cell);
         }
     }
 }

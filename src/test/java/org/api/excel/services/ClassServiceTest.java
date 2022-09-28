@@ -1,5 +1,6 @@
 package org.api.excel.services;
 
+import org.api.excel.exception.ClassServiceException;
 import org.api.excel.sample.Sample;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +30,7 @@ class ClassServiceTest {
     void setField_FielNoSettable_Exception() {
         ClassService.Builder<Sample> builder = ClassService.clazz(Sample.class);
         builder
-                .field("stringValue","John");
+                .field("stringValue", "John");
         assertThatThrownBy(builder::build)
                 .isInstanceOf(ClassServiceException.class)
                 .hasMessage("Cannot set :stringValue");
@@ -40,9 +41,9 @@ class ClassServiceTest {
         ClassService.Builder<Sample> builder = ClassService.clazz(Sample.class);
         LocalDate now = LocalDate.now();
         builder
-                .field("firstname","John")
-                .field("lastname","Doe")
-                .field("age",1)
+                .field("firstname", "John")
+                .field("lastname", "Doe")
+                .field("age", 1)
                 .field("toDay", now);
         ClassService<Sample> service = builder
                 .build();

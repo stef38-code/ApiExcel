@@ -2,20 +2,22 @@ package org.api.excel.sample;
 
 import org.api.excel.annotations.ExcelCell;
 import org.api.excel.annotations.ExcelSheet;
+import org.api.excel.annotations.ExcelSheets;
 
 @ExcelSheet(name = "Feuil1")
+@ExcelSheets(value = {})
 public class Personne {
     @ExcelCell(stringFormat = true)
     private String name;
-    @ExcelCell(number =1)
+    @ExcelCell(number = 1)
     private String company;
-    @ExcelCell(number =2)
+    @ExcelCell(number = 2)
     private String address;
-    @ExcelCell(number =3, stringFormat = true)
+    @ExcelCell(number = 3, stringFormat = true)
     private String postalZip;
-    @ExcelCell(number =4)
+    @ExcelCell(number = 4)
     private String city;
-    @ExcelCell(number =5)
+    @ExcelCell(number = 5)
     private String guid;
 
     public String getName() {

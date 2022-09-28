@@ -3,6 +3,7 @@ package org.api.excel.parser;
 
 import org.api.excel.mapping.ModelMapper;
 import org.api.excel.model.SheetModel;
+import org.api.excel.services.WorkbookService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ParseExcel<T> {
     }
 
     public static final class Builder<T> {
-        private final ExcelFile<T> excelFile = new ExcelFile<T>(this);
+        private final WorkbookService<T> workbookService = new WorkbookService<>();
         private List<T> listEntities;
         private Class<T> tClass;
         private final List<String> files;
@@ -48,7 +49,7 @@ public class ParseExcel<T> {
              * les fichiers
              */
             for (String file : files) {
-                excelFile.execute(sheetModel, file, listEntities, tClass);
+                workbookService.execute(sheetModel, file, listEntities, tClass);
             }
             List<T> entities = new ParseExcel<>(this).getEntities();
             return Optional.ofNullable(entities);
