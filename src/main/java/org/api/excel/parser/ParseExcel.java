@@ -1,6 +1,7 @@
 package org.api.excel.parser;
 
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.api.excel.mapping.ModelMapper;
 import org.api.excel.model.SheetModel;
 import org.api.excel.services.WorkbookService;
@@ -52,7 +53,10 @@ public class ParseExcel<T> {
                 workbookService.execute(sheetModel, file, listEntities, tClass);
             }
             List<T> entities = new ParseExcel<>(this).getEntities();
-            return Optional.ofNullable(entities);
+            if(CollectionUtils.isNotEmpty(entities)) {
+                return Optional.ofNullable(entities);
+            }
+            return Optional.empty();
         }
 
         public Builder<T> file(String excelFile) {
