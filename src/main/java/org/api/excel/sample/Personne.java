@@ -2,10 +2,8 @@ package org.api.excel.sample;
 
 import org.api.excel.annotations.ExcelCell;
 import org.api.excel.annotations.ExcelSheet;
-import org.api.excel.annotations.ExcelSheets;
 
 @ExcelSheet(name = "Feuil1")
-@ExcelSheets(value = {})
 public class Personne {
     @ExcelCell(stringFormat = true)
     private String name;

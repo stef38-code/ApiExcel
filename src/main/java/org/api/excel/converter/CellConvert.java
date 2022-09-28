@@ -5,13 +5,12 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.api.excel.annotations.ExcelCell;
 import org.api.excel.exception.CellConvertException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.api.excel.utils.Debug;
 
 import java.util.Objects;
 
 public class CellConvert {
-    private static final Logger log = LoggerFactory.getLogger(CellConvert.class);
+
     private static CellConvert instance = null;
 
     private CellConvert() {
@@ -33,7 +32,7 @@ public class CellConvert {
     }
 
     private Object returnValue(Cell cell) {
-        log.debug("ObjectValue -> type de cellule {} ", cell.getCellType());
+        Debug.print(this.getClass(), () -> "ObjectValue -> type de cellule {0} ", cell.getCellType());
         CellType cellType = cell.getCellType();
         switch (cellType) {
             case NUMERIC:
@@ -58,7 +57,7 @@ public class CellConvert {
     }
 
     public String returnStringValue(Cell cell) {
-        log.debug("stringValue -> type de cellule {} value {}", cell.getCellType(), cell);
+        Debug.print(this.getClass(), () -> "stringValue -> type de cellule {0} value {1}", cell.getCellType(), cell);
         CellType cellType = cell.getCellType();
 
         switch (cellType) {

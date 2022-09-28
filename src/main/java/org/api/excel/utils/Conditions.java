@@ -1,5 +1,6 @@
 package org.api.excel.utils;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -11,10 +12,10 @@ import java.util.function.Predicate;
 /**
  * The type Conditions.
  */
-public class Conditions extends Require{
-private Conditions() {
-    super();
-}
+public class Conditions extends Require {
+    private Conditions() {
+        super();
+    }
 
     /**
      * Require not empty.
@@ -28,6 +29,12 @@ private Conditions() {
         positiveTest(collection, Collection::isEmpty, msg);
     }
 
+    public static void requireNotEmpty(Object[] objects, String msg) {
+        Objects.requireNonNull(objects, "the Collection cannot be null");
+        positiveTest(objects,
+                ArrayUtils::isEmpty, msg);
+    }
+
     /**
      * Require non null.
      *
@@ -38,7 +45,7 @@ private Conditions() {
         if (!optional.isPresent()) {
             throw new IllegalArgumentException(msg);
         }
-        Objects.requireNonNull(optional.get(),"the value cannot be null");
+        Objects.requireNonNull(optional.get(), "the value cannot be null");
     }
 
     /**
@@ -70,8 +77,8 @@ private Conditions() {
      * @param file the file
      */
     public static void requireExists(File file) {
-        Objects.requireNonNull(file,"the file cannot be null");
-        negativeTest(file,File::exists,"File or directory not exist");
+        Objects.requireNonNull(file, "the file cannot be null");
+        negativeTest(file, File::exists, "File or directory not exist");
     }
 
     /**
@@ -80,7 +87,7 @@ private Conditions() {
      * @param file the file
      */
     public static void requireIsFile(File file) {
-        Objects.requireNonNull(file,"File cannot be null");
-        positiveTest(file,Predicate.not(File::isFile),"Is not file");
+        Objects.requireNonNull(file, "File cannot be null");
+        positiveTest(file, Predicate.not(File::isFile), "Is not file");
     }
 }

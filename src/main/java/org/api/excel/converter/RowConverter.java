@@ -6,15 +6,14 @@ import org.api.excel.annotations.ExcelCell;
 import org.api.excel.exception.RowConverterException;
 import org.api.excel.model.CellModel;
 import org.api.excel.reflection.Reflective;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.api.excel.utils.Debug;
 
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
 
 public class RowConverter {
-    private static final Logger log = LoggerFactory.getLogger(RowConverter.class);
+
     private static RowConverter instance = null;
     private final CellConvert cellConvert;
 
@@ -39,7 +38,7 @@ public class RowConverter {
     }
 
     public <T> T toClass(Row row, Class<T> tClass, List<CellModel> cellModels) {
-        log.debug("---> Convert row number {} to class {} ", row.getRowNum(), tClass.getName());
+        Debug.print(this.getClass(), () -> "---> Convert row number {0} to class {1} ", row.getRowNum(), tClass.getName());
         try {
             T entity = Reflective.createInstance(tClass);
             cellModels.forEach(cellModel -> this.toField(row, entity, cellModel));

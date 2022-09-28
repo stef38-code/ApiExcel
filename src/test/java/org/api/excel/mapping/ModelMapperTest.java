@@ -2,6 +2,7 @@ package org.api.excel.mapping;
 
 import org.api.excel.annotations.ExcelCell;
 import org.api.excel.annotations.ExcelSheet;
+import org.api.excel.annotations.ExcelSheets;
 import org.api.excel.model.CellModel;
 import org.api.excel.model.SheetModel;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,9 @@ class ModelMapperTest {
         ModelMapper instance = ModelMapper.getInstance();
         SheetModel model = instance.to(DefaultClass.class);
         assertThat(model).isNotNull();
-        ExcelSheet sheetAnnotation = model.getSheetAnnotation();
+        ExcelSheets annotationSheets = model.getAnnotationSheets();
+        assertThat(annotationSheets.value()).isNotEmpty().hasSize(1);
+        ExcelSheet sheetAnnotation = annotationSheets.value()[0];
         assertThat(sheetAnnotation).isNotNull().isInstanceOf(ExcelSheet.class);
         assertThat(sheetAnnotation.name()).isEmpty();
         assertThat(sheetAnnotation.number()).isZero();

@@ -2,6 +2,7 @@ package org.api.excel.mapping;
 
 import org.api.excel.annotations.ExcelCell;
 import org.api.excel.annotations.ExcelSheet;
+import org.api.excel.annotations.ExcelSheets;
 import org.api.excel.annotations.business.AnnotationInClass;
 import org.api.excel.model.CellModel;
 import org.api.excel.model.SheetModel;
@@ -28,14 +29,18 @@ public class ModelMapper {
     }
 
     public SheetModel to(Class<?> clazz) {
-        Optional<ExcelSheet> classAnnotation = AnnotationInClass.getClassAnnotation(clazz, ExcelSheet.class);
+        Optional<ExcelSheet> annotationSheet = AnnotationInClass.getClassAnnotation(clazz, ExcelSheet.class);
+        Optional<ExcelSheets> annotationSheets = AnnotationInClass.getClassAnnotation(clazz, ExcelSheets.class);
         Optional<List<Field>> fieldContainAnnotation = AnnotationInClass.getFieldContainAnnotation(clazz, ExcelCell.class);
-        //
-        Conditions.requireNonNull(classAnnotation, "ExcelSheet annotation not found");
+        //deux present ou les deux absents
+        if (annotationSheet.isPresent() == annotationSheets.isPresent()) {
+            throw new RuntimeException("ExcelSheet or ExcelSheets mandatory");
+        }
+        Conditions.requireNonNull(annotationSheet, "ExcelSheet annotation not found");
         Conditions.requireNonNull(fieldContainAnnotation, "No fields found with ExcelCell annotation");
         //
-        return SheetModel.builder()
-                .sheetAnnotation(classAnnotation.orElse(null))
+        return SheetModel.annotationSheets(annotationSheets.orElse(null))
+                .sheetAnnotation(annotationSheet.orElse(null))
                 .cellModels(
                         to(fieldContainAnnotation.orElse(null))).build();
     }
@@ -45,7 +50,7 @@ public class ModelMapper {
     }
 
     private List<CellModel> to(List<Field> fields) {
-        Objects.requireNonNull(fields,"No fields found");
+        Objects.requireNonNull(fields, "No fields found");
         return fields.stream().map(this::to).collect(Collectors.toList());
     }
 }

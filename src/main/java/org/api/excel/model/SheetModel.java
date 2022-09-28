@@ -1,8 +1,10 @@
 package org.api.excel.model;
 
 import org.api.excel.annotations.ExcelSheet;
+import org.api.excel.annotations.ExcelSheets;
 import org.api.excel.utils.Conditions;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,25 +12,32 @@ import java.util.Objects;
  * The type Sheet model.
  */
 public class SheetModel {
-    private final ExcelSheet sheetAnnotation;
+
+    private final ExcelSheets annotationSheets;
     private final List<CellModel> cellModels;
 
     private SheetModel(Builder builder) {
-        Objects.requireNonNull( builder.sheetAnnotation, "the annotation cannot is null");
-        Conditions.requireNotEmpty( builder.cellModels, "the Collection cannot be empty");
+        Objects.requireNonNull(builder.annotationSheets, "the annotation cannot is null");
+        Conditions.requireNotEmpty(builder.annotationSheets.value(), "the annotation cannot is null");
+        Conditions.requireNotEmpty(builder.cellModels, "the Collection cannot be empty");
 
-        this.sheetAnnotation = builder.sheetAnnotation;
+        this.annotationSheets = builder.annotationSheets;
         this.cellModels = builder.cellModels;
     }
 
     /**
-     * Gets sheet annotation.
+     * Builder builder.
      *
-     * @return the sheet annotation
+     * @return the builder
      */
-    public ExcelSheet getSheetAnnotation() {
-        return sheetAnnotation;
+    public static Builder annotationSheets(ExcelSheets annotationSheets) {
+        return new Builder().annotationSheets(annotationSheets);
     }
+
+    public ExcelSheets getAnnotationSheets() {
+        return annotationSheets;
+    }
+
 
     /**
      * Gets cell models.
@@ -40,19 +49,10 @@ public class SheetModel {
     }
 
     /**
-     * Builder builder.
-     *
-     * @return the builder
-     */
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    /**
      * The type Builder.
      */
     public static final class Builder {
-        private ExcelSheet sheetAnnotation;
+        private ExcelSheets annotationSheets;
         private List<CellModel> cellModels;
 
 
@@ -67,8 +67,24 @@ public class SheetModel {
          * @return the builder
          */
         public Builder sheetAnnotation(ExcelSheet sheetAnnotation) {
+            this.annotationSheets = new ExcelSheets() {
 
-            this.sheetAnnotation = sheetAnnotation;
+                @Override
+                public Class<? extends Annotation> annotationType() {
+                    return ExcelSheets.class;
+                }
+
+                @Override
+                public ExcelSheet[] value() {
+                    return new ExcelSheet[]{sheetAnnotation};
+                }
+            };
+            return this;
+        }
+
+        public Builder annotationSheets(ExcelSheets annotationSheets) {
+
+            this.annotationSheets = annotationSheets;
             return this;
         }
 
@@ -79,7 +95,7 @@ public class SheetModel {
          * @return the builder
          */
         public Builder cellModels(List<CellModel> cellModels) {
-           this.cellModels = cellModels;
+            this.cellModels = cellModels;
             return this;
         }
 
