@@ -1,6 +1,7 @@
 package org.api.excel.model;
 
 import org.api.excel.annotations.ExcelSheet;
+import org.api.excel.annotations.ExcelSheets;
 import org.api.excel.annotations.business.AnnotationInClass;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class SheetModelTest {
      * Methods under test:
      *
      * <ul>
-     *   <li>{@link SheetModel#builder()#builder()}
+     *   <li>{@link SheetModel##annotationSheets(ExcelSheets)#builder()}
      * </ul>
      */
     @Test
@@ -29,7 +30,7 @@ class SheetModelTest {
      * Methods under test:
      *
      * <ul>
-     *   <li>{@link SheetModel#builder()#builder()}
+     *   <li>{@link SheetModel#annotationSheets(ExcelSheets)#builder()}
      * </ul>
      */
     @Test
@@ -45,7 +46,7 @@ class SheetModelTest {
      * Methods under test:
      *
      * <ul>
-     *   <li>{@link SheetModel#builder()#builder()}
+     *   <li>{@link SheetModel##annotationSheets(ExcelSheets)#builder()}
      * </ul>
      */
     @Test
@@ -62,7 +63,7 @@ class SheetModelTest {
      * Methods under test:
      *
      * <ul>
-     *   <li>{@link SheetModel#builder()#builder()}
+     *   <li>{@link SheetModel#annotationSheets(ExcelSheets)#builder()}
      * </ul>
      */
     @Test

@@ -67,18 +67,20 @@ public class SheetModel {
          * @return the builder
          */
         public Builder sheetAnnotation(ExcelSheet sheetAnnotation) {
-            this.annotationSheets = new ExcelSheets() {
+            if(Objects.nonNull(sheetAnnotation)) {
+                this.annotationSheets = new ExcelSheets() {
 
-                @Override
-                public Class<? extends Annotation> annotationType() {
-                    return ExcelSheets.class;
-                }
+                    @Override
+                    public Class<? extends Annotation> annotationType() {
+                        return ExcelSheets.class;
+                    }
 
-                @Override
-                public ExcelSheet[] value() {
-                    return new ExcelSheet[]{sheetAnnotation};
-                }
-            };
+                    @Override
+                    public ExcelSheet[] value() {
+                        return new ExcelSheet[]{sheetAnnotation};
+                    }
+                };
+            }
             return this;
         }
 

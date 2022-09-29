@@ -36,7 +36,7 @@ public class ModelMapper {
         if (annotationSheet.isPresent() == annotationSheets.isPresent()) {
             throw new RuntimeException("ExcelSheet or ExcelSheets mandatory");
         }
-        Conditions.requireNonNull(annotationSheet, "ExcelSheet annotation not found");
+        //Conditions.requireNonNull(annotationSheet, "ExcelSheet annotation not found");
         Conditions.requireNonNull(fieldContainAnnotation, "No fields found with ExcelCell annotation");
         //
         return SheetModel.annotationSheets(annotationSheets.orElse(null))

@@ -1,13 +1,14 @@
 package org.api.excel.utils;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.File;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * The type Conditions.
@@ -31,8 +32,10 @@ public class Conditions extends Require {
 
     public static void requireNotEmpty(Object[] objects, String msg) {
         Objects.requireNonNull(objects, "the Collection cannot be null");
-        positiveTest(objects,
-                ArrayUtils::isEmpty, msg);
+        List<Object> collect = Arrays.stream(objects).collect(Collectors.toList());
+        if(collect.contains(null)){
+            throw new IllegalArgumentException(msg);
+        }
     }
 
     /**

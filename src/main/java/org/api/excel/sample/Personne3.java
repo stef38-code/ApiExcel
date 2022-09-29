@@ -4,8 +4,12 @@ import org.api.excel.annotations.ExcelCell;
 import org.api.excel.annotations.ExcelSheet;
 import org.api.excel.annotations.ExcelSheets;
 
-@ExcelSheets(value = {@ExcelSheet(name = "Feuil2", rowNumber = 9)})
-public class Personne2 {
+@ExcelSheets(value = {
+        @ExcelSheet(name = "Feuil1"),
+        @ExcelSheet(name = "Feuil2", rowNumber = 9),
+        @ExcelSheet(number = 2, rowNumber = 1)
+})
+public class Personne3 {
     @ExcelCell(stringFormat = true)
     private String name;
     @ExcelCell(number = 1)

@@ -14,5 +14,5 @@ public @interface ExcelSheets {
      *
      * @return the excel sheet [ ]
      */
-    ExcelSheet[] value();
+    ExcelSheet[] value() default {};
 }
