@@ -25,6 +25,7 @@ public class CellConvert {
     }
 
     public Object value(ExcelCell annotation, Cell cell) {
+        Debug.print(this.getClass(), () -> "cell column index {0} ", cell.getColumnIndex());
         if (annotation.stringFormat()) {
             return returnStringValue(cell);
         }
@@ -32,7 +33,7 @@ public class CellConvert {
     }
 
     private Object returnValue(Cell cell) {
-        Debug.print(this.getClass(), () -> "ObjectValue -> type de cellule {0} ", cell.getCellType());
+
         CellType cellType = cell.getCellType();
         switch (cellType) {
             case NUMERIC:

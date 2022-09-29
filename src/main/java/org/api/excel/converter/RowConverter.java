@@ -50,7 +50,10 @@ public class RowConverter {
 
     private <T> void toField(Row row, T entity, CellModel cellModel) {
         Field field = cellModel.getField();
-        Cell cell = row.getCell(field.getAnnotation(ExcelCell.class).number());
+        int position = field.getAnnotation(ExcelCell.class).number();
+        log.debug("Position definie dans la classe {0}",field.getName(),position);
+        Cell cell = row.getCell(position);
+
         setField(entity, cellModel.getField(), cell);
     }
 }
