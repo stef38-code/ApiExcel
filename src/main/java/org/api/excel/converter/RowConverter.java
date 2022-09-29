@@ -30,6 +30,7 @@ public class RowConverter {
     }
 
     private <T> void setField(T entity, Field field, Cell cell) {
+        Objects.requireNonNull(cell,"cell cannot null !!");
         try {
             Reflective.setterField(entity, field.getName(), cellConvert.value(field.getAnnotation(ExcelCell.class), cell));
         } catch (ReflectiveOperationException e) {
@@ -51,9 +52,8 @@ public class RowConverter {
     private <T> void toField(Row row, T entity, CellModel cellModel) {
         Field field = cellModel.getField();
         int position = field.getAnnotation(ExcelCell.class).number();
-        log.debug("Position definie dans la classe {0}",field.getName(),position);
+        Debug.print(this.getClass(),()->"Position definie dans la classe {0}",field.getName(),position);
         Cell cell = row.getCell(position);
-
         setField(entity, cellModel.getField(), cell);
     }
 }
