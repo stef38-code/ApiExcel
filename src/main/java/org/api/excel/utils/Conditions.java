@@ -1,9 +1,6 @@
 package org.api.excel.utils;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.io.File;
 import java.util.*;
@@ -33,7 +30,7 @@ public class Conditions extends Require {
     public static void requireNotEmpty(Object[] objects, String msg) {
         Objects.requireNonNull(objects, "the Collection cannot be null");
         List<Object> collect = Arrays.stream(objects).collect(Collectors.toList());
-        if(collect.contains(null)){
+        if (collect.contains(null)) {
             throw new IllegalArgumentException(msg);
         }
     }
@@ -41,14 +38,18 @@ public class Conditions extends Require {
     /**
      * Require non null.
      *
-     * @param optional the class annotation
-     * @param msg      the msg
+     * @param value the class annotation
+     * @param msg   the msg
      */
-    public static void requireNonNull(Optional<?> optional, String msg) {
-        if (!optional.isPresent()) {
+    public static void requireNonNull(Optional value, String msg) {
+        value.ifPresentOrElse(v -> Objects.requireNonNull(value.get(), "the value cannot be null")
+                , () -> {
+                    throw new IllegalArgumentException(msg);
+                });
+        /*if (!value.isPresent()) {
             throw new IllegalArgumentException(msg);
         }
-        Objects.requireNonNull(optional.get(), "the value cannot be null");
+        Objects.requireNonNull(value.get(), "the value cannot be null");*/
     }
 
     /**

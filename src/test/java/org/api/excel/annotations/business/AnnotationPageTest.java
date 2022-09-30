@@ -52,7 +52,7 @@ class AnnotationPageTest {
 
     }
 
-    @Book(value = {})
+    @Book()
     private static class DefaultExcelSheet {
 
     }

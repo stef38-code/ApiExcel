@@ -14,10 +14,8 @@ public class CellConvertException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        StringBuilder message = new StringBuilder(msg);
-        message.append(" cell: ").append(cell.getRowIndex());
-        message.append(" row: ").append(cell.getRow().getRowNum());
-        message.append(" sheet: ").append(cell.getSheet().getSheetName());
-        return message.toString();
+        return msg + " cell: " + cell.getRowIndex() +
+                " row: " + cell.getRow().getRowNum() +
+                " sheet: " + cell.getSheet().getSheetName();
     }
 }

@@ -28,7 +28,7 @@ public class ParseExcel<T> {
 
     public static final class Builder<T> {
         private final WorkbookService<T> workbookService = new WorkbookService<>();
-        private List<T> listEntities;
+        private final List<T> listEntities;
         private Class<T> tClass;
         private final List<String> files;
 
@@ -54,7 +54,7 @@ public class ParseExcel<T> {
             }
             List<T> entities = new ParseExcel<>(this).getEntities();
             if(CollectionUtils.isNotEmpty(entities)) {
-                return Optional.ofNullable(entities);
+                return Optional.of(entities);
             }
             return Optional.empty();
         }

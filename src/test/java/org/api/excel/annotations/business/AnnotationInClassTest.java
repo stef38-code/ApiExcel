@@ -51,10 +51,11 @@ class AnnotationInClassTest {
         assertThat(fields.get()).isNotNull().hasSize(2);
     }
     @Deprecated
-    private class MyTest{
-
+    private static class MyTest{
+        public MyTest() {
+        }
     }
-    private class MyTest2{
+    private static class MyTest2{
         @NotNull(message = "Name cannot be null")
         private String name;
         @NotNull

@@ -32,7 +32,7 @@ class BoxModelTest {
      * </ul>
      */
     @Test
-    void build_then_fieldNotAnnatation_when_NullPointerException() throws NoSuchFieldException {
+    void build_then_fieldNotAnnotation_when_NullPointerException() throws NoSuchFieldException {
         Field actualField = MyClass.class.getField("name");
         Assertions.assertThatThrownBy(CellModel.builder().field(actualField)::build)
                 .isInstanceOf(NullPointerException.class)

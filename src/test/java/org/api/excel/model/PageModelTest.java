@@ -35,8 +35,7 @@ class PageModelTest {
      */
     @Test
     void build_then_sheetAnnotationIsNull_when_NullPointerException() {
-        Page annotation = null;
-        Assertions.assertThatThrownBy(SheetModel.annotationSheets(null).sheetAnnotation(annotation)::build)
+        Assertions.assertThatThrownBy(SheetModel.annotationSheets(null).sheetAnnotation(null)::build)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("the annotation cannot is null");
 
@@ -69,15 +68,16 @@ class PageModelTest {
     @Test
     void build_then_cellModelsIsEmpty_when_IllegalArgumentException() {
         Optional<Page> classAnnotation = AnnotationInClass.getClassAnnotation(MyClass.class, Page.class);
-        Page annotation = classAnnotation.get();
-        Assertions.assertThatThrownBy(SheetModel.annotationSheets(null).sheetAnnotation(annotation).cellModels(Collections.EMPTY_LIST)::build)
+
+        Page annotation = classAnnotation.orElse(null);
+        Assertions.assertThatThrownBy(SheetModel.annotationSheets(null).sheetAnnotation(annotation).cellModels(Collections.emptyList())::build)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("the Collection cannot be empty");
 
     }
 
     @Page
-    private class MyClass {
+    private static class MyClass {
 
     }
 }

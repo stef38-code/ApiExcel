@@ -19,8 +19,8 @@ class ClassServiceTest {
     }
 
     @Test
-    void newInstance_Lorsque_PrivateContructeur_Attend_ClassServiceException() {
-        ClassService.Builder<ClassService> builder = ClassService.<ClassService>clazz(ClassService.class);
+    void newInstance_Lorsque_PrivateConstructeur_Attend_ClassServiceException() {
+        ClassService.Builder<ClassService> builder = ClassService.clazz(ClassService.class);
         assertThatThrownBy(builder::build)
                 .isInstanceOf(ClassServiceException.class)
                 .hasMessage("Cannot create instance :ClassService");
