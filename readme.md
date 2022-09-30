@@ -80,7 +80,7 @@ class SimpleFile {
 #### n fichiers
 
 ```java
-class SimpleFile {
+class MultiFile {
     public static void main(String[] args) {
         String fileXls = FileUtil.getAbsolutePath("exemple.xls");
         String fileXlsx = FileUtil.getAbsolutePath("exemple.xlsx");
