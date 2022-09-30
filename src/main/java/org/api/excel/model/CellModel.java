@@ -10,10 +10,18 @@ public class CellModel {
     private final Box annotation;
 
     private CellModel(Builder builder) {
-        Objects.requireNonNull( builder.field,"the field cannot is null");
-        Objects.requireNonNull( builder.annotation,"the annotation cannot is null");
+        Objects.requireNonNull(builder.field, "the field cannot is null");
+        Objects.requireNonNull(builder.annotation, "the annotation cannot is null");
         this.field = builder.field;
         this.annotation = builder.annotation;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static Builder duplique(CellModel cellModelOld) {
+        return new Builder(cellModelOld.getAnnotation(), cellModelOld.getField());
     }
 
     public Field getField() {
@@ -23,9 +31,7 @@ public class CellModel {
     public Box getAnnotation() {
         return annotation;
     }
-    public static Builder builder() {
-        return new Builder();
-    }
+
     public static final class Builder {
 
         private Field field;
@@ -34,9 +40,19 @@ public class CellModel {
         private Builder() {
         }
 
+        private Builder(Box annotation, Field field) {
+            this.annotation = annotation;
+            this.field = field;
+        }
+
         public Builder field(Field field) {
             this.annotation = field.getAnnotation(Box.class);
             this.field = field;
+            return this;
+        }
+
+        public Builder annotation(Box annotation) {
+            this.annotation = annotation;
             return this;
         }
 

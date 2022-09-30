@@ -3,7 +3,6 @@ package org.api.excel.utils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.text.MessageFormat;
 import java.util.function.Supplier;
 
 /**
@@ -34,7 +33,7 @@ import java.util.function.Supplier;
  * <br>
  * <p>
  * exemple 2 :
- *     Debug.print(this,  new Exception("Exception TU"),"Get {0} {1} {2}", "1","2","3");
+ * Debug.print(this,  new Exception("Exception TU"),"Get {0} {1} {2}", "1","2","3");
  * <p>
  * console:
  * 13:55:09.409 [DEBUG] - Get 1 2 3<br>
@@ -54,23 +53,25 @@ public class Debug {
 
     /**
      * Print message avec arguments et exception
-     *<p>
-     *     Debug.print(this,  new Exception("Exception TU"),"Get {0} {1} {2}", "1","2","3");
-     *</p>
+     * <p>
+     * Debug.print(this,  new Exception("Exception TU"),"Get {0} {1} {2}", "1","2","3");
+     * </p>
+     *
      * @param clazz      the clazz
      * @param ex         the ex
      * @param msgPattern the msg pattern
      * @param args       the args
      */
     public static void print(Object clazz, Throwable ex, String msgPattern, Object... args) {
-        printThrowable(clazz, () -> transfort(msgPattern, args), ex);
+        printThrowable(clazz, () -> TransformeMessage.transfort(msgPattern, args), ex);
     }
 
     /**
      * Print message avec arguments
-     *<p>
-     *     Debug.print(this,"Get {0} {1} {2}", "1","2","3");
-     *</p>
+     * <p>
+     * Debug.print(this,"Get {0} {1} {2}", "1","2","3");
+     * </p>
+     *
      * @param clazz      the clazz
      * @param msgPattern the msg pattern
      * @param args       the args
@@ -81,9 +82,10 @@ public class Debug {
 
     /**
      * Print message sans arguments et exception
-     *<p>
-     *     Debug.print(this,"Get",new Exception("Exception TU"));
-     *</p>
+     * <p>
+     * Debug.print(this,"Get",new Exception("Exception TU"));
+     * </p>
+     *
      * @param cThis      the c this
      * @param msgPattern the msg pattern
      * @param ex         the ex
@@ -100,18 +102,6 @@ public class Debug {
     }
 
     /**
-     * message args
-     *
-     * @param msgPattern String pattern
-     * @param args       args
-     * @return String
-     */
-    private static String transfort(String msgPattern, Object[] args) {
-        MessageFormat format = new MessageFormat(msgPattern);
-        return format.format(args);
-    }
-
-    /**
      * @param cThis
      * @param message
      * @param args
@@ -119,7 +109,7 @@ public class Debug {
     private static void printArgs(Object cThis, Supplier<String> message, Object... args) {
         Log logger = LogFactory.getLog(cThis.getClass());
         if (logger.isDebugEnabled()) {
-            String msg = transfort(message.get(), args);
+            String msg = TransformeMessage.transfort(message.get(), args);
             logger.debug(msg);
         }
     }

@@ -1,5 +1,7 @@
 package org.api.excel.converter;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.api.excel.annotations.Box;
@@ -30,7 +32,7 @@ public class RowConverter {
     }
 
     private <T> void setField(T entity, Field field, Cell cell) {
-        Objects.requireNonNull(cell,"cell cannot null !!");
+        Objects.requireNonNull(cell, "cell cannot null !!");
         try {
             Reflective.setterField(entity, field.getName(), cellConvert.value(field.getAnnotation(Box.class), cell));
         } catch (ReflectiveOperationException e) {
@@ -39,10 +41,11 @@ public class RowConverter {
     }
 
     public <T> T toClass(Row row, Class<T> tClass, List<CellModel> cellModels) {
-        Debug.print(this,  "---> Convert row number {0} to class {1} ", row.getRowNum(), tClass.getName());
+        Debug.print(this, "---> Convert row number {0} to class {1} ", row.getRowNum(), tClass.getName());
         try {
             T entity = Reflective.createInstance(tClass);
             cellModels.forEach(cellModel -> this.toField(row, entity, cellModel));
+            Debug.print(this, "{0}", ReflectionToStringBuilder.toString(entity, ToStringStyle.SHORT_PREFIX_STYLE));
             return entity;
         } catch (ReflectiveOperationException e) {
             throw new RowConverterException(e);
@@ -52,8 +55,8 @@ public class RowConverter {
     private <T> void toField(Row row, T entity, CellModel cellModel) {
         Field field = cellModel.getField();
         int position = field.getAnnotation(Box.class).number();
-        Debug.print(this,"Position definie dans la classe {0}",field.getName(),position);
-        org.apache.poi.ss.usermodel.Cell cell = row.getCell(position);
+        Debug.print(this, "Position {1} definie dans la classe {0}", field.getName(), position);
+        Cell cell = row.getCell(position);
         setField(entity, cellModel.getField(), cell);
     }
 }
