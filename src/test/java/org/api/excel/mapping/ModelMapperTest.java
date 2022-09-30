@@ -1,8 +1,8 @@
 package org.api.excel.mapping;
 
-import org.api.excel.annotations.ExcelCell;
-import org.api.excel.annotations.ExcelSheet;
-import org.api.excel.annotations.ExcelSheets;
+import org.api.excel.annotations.Box;
+import org.api.excel.annotations.Page;
+import org.api.excel.annotations.Book;
 import org.api.excel.model.CellModel;
 import org.api.excel.model.SheetModel;
 import org.junit.jupiter.api.Test;
@@ -31,36 +31,36 @@ class ModelMapperTest {
         ModelMapper instance = ModelMapper.getInstance();
         SheetModel model = instance.to(DefaultClass.class);
         assertThat(model).isNotNull();
-        ExcelSheets annotationSheets = model.getAnnotationSheets();
+        Book annotationSheets = model.getAnnotationSheets();
         assertThat(annotationSheets.value()).isNotEmpty().hasSize(1);
-        ExcelSheet sheetAnnotation = annotationSheets.value()[0];
-        assertThat(sheetAnnotation).isNotNull().isInstanceOf(ExcelSheet.class);
-        assertThat(sheetAnnotation.name()).isEmpty();
-        assertThat(sheetAnnotation.number()).isZero();
-        assertThat(sheetAnnotation.rowNumber()).isOne();
+        Page pageAnnotation = annotationSheets.value()[0];
+        assertThat(pageAnnotation).isNotNull().isInstanceOf(Page.class);
+        assertThat(pageAnnotation.name()).isEmpty();
+        assertThat(pageAnnotation.number()).isZero();
+        assertThat(pageAnnotation.rowNumber()).isOne();
 
         List<CellModel> cellModels = model.getCellModels();
         assertThat(cellModels).isNotEmpty().hasSize(4);
         cellModels.forEach(element -> {
             Field field = element.getField();
-            ExcelCell annotation = element.getAnnotation();
+            Box annotation = element.getAnnotation();
 
             assertThat(field).isNotNull();
-            assertThat(annotation).isNotNull().isInstanceOf(ExcelCell.class);
+            assertThat(annotation).isNotNull().isInstanceOf(Box.class);
 
 
         });
     }
 
-    @ExcelSheet
-    private class DefaultClass {
-        @ExcelCell
+    @Page
+    private static class DefaultClass {
+        @Box
         private String firstname;
-        @ExcelCell
+        @Box
         private String lastname;
-        @ExcelCell
+        @Box
         private LocalDate dnaiss;
-        @ExcelCell
+        @Box
         private int age;
     }
 }

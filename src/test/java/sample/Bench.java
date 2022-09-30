@@ -1,23 +1,23 @@
-package org.api.excel.sample;
+package sample;
 
-import org.api.excel.annotations.ExcelCell;
-import org.api.excel.annotations.ExcelSheet;
+import org.api.excel.annotations.Box;
+import org.api.excel.annotations.Page;
 
-@ExcelSheet(name = "Sheet 1")
+@Page(name = "Sheet 1")
 public class Bench {
-    @ExcelCell(stringFormat = true)
+    @Box(stringFormat = true)
     private String first;
-    @ExcelCell(number =1,stringFormat = true)
+    @Box(number =1,stringFormat = true)
     private String last	;
-    @ExcelCell(number =2,stringFormat = true)
+    @Box(number =2,stringFormat = true)
     private String birthday;
-    @ExcelCell(number =3,stringFormat = true)
+    @Box(number =3,stringFormat = true)
     private String 	gender;
-    @ExcelCell(number =4,stringFormat = true)
+    @Box(number =4,stringFormat = true)
     private String 	phone;
-    @ExcelCell(number =5,stringFormat = true)
+    @Box(number =5,stringFormat = true)
     private String 	email;
-    @ExcelCell(number =6,stringFormat = true)
+    @Box(number =6,stringFormat = true)
     private String 	city;
 
     public String getFirst() {

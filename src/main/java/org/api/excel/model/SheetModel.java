@@ -1,7 +1,7 @@
 package org.api.excel.model;
 
-import org.api.excel.annotations.ExcelSheet;
-import org.api.excel.annotations.ExcelSheets;
+import org.api.excel.annotations.Page;
+import org.api.excel.annotations.Book;
 import org.api.excel.utils.Conditions;
 
 import java.lang.annotation.Annotation;
@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 public class SheetModel {
 
-    private final ExcelSheets annotationSheets;
+    private final Book annotationSheets;
     private final List<CellModel> cellModels;
 
     private SheetModel(Builder builder) {
@@ -30,11 +30,11 @@ public class SheetModel {
      *
      * @return the builder
      */
-    public static Builder annotationSheets(ExcelSheets annotationSheets) {
+    public static Builder annotationSheets(Book annotationSheets) {
         return new Builder().annotationSheets(annotationSheets);
     }
 
-    public ExcelSheets getAnnotationSheets() {
+    public Book getAnnotationSheets() {
         return annotationSheets;
     }
 
@@ -52,7 +52,7 @@ public class SheetModel {
      * The type Builder.
      */
     public static final class Builder {
-        private ExcelSheets annotationSheets;
+        private Book annotationSheets;
         private List<CellModel> cellModels;
 
 
@@ -63,28 +63,28 @@ public class SheetModel {
         /**
          * Sheet annotation builder.
          *
-         * @param sheetAnnotation the sheet annotation
+         * @param pageAnnotation the sheet annotation
          * @return the builder
          */
-        public Builder sheetAnnotation(ExcelSheet sheetAnnotation) {
-            if(Objects.nonNull(sheetAnnotation)) {
-                this.annotationSheets = new ExcelSheets() {
+        public Builder sheetAnnotation(Page pageAnnotation) {
+            if(Objects.nonNull(pageAnnotation)) {
+                this.annotationSheets = new Book() {
 
                     @Override
                     public Class<? extends Annotation> annotationType() {
-                        return ExcelSheets.class;
+                        return Book.class;
                     }
 
                     @Override
-                    public ExcelSheet[] value() {
-                        return new ExcelSheet[]{sheetAnnotation};
+                    public Page[] value() {
+                        return new Page[]{pageAnnotation};
                     }
                 };
             }
             return this;
         }
 
-        public Builder annotationSheets(ExcelSheets annotationSheets) {
+        public Builder annotationSheets(Book annotationSheets) {
 
             this.annotationSheets = annotationSheets;
             return this;

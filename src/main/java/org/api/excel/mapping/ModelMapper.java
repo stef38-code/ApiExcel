@@ -1,8 +1,8 @@
 package org.api.excel.mapping;
 
-import org.api.excel.annotations.ExcelCell;
-import org.api.excel.annotations.ExcelSheet;
-import org.api.excel.annotations.ExcelSheets;
+import org.api.excel.annotations.Box;
+import org.api.excel.annotations.Page;
+import org.api.excel.annotations.Book;
 import org.api.excel.annotations.business.AnnotationInClass;
 import org.api.excel.model.CellModel;
 import org.api.excel.model.SheetModel;
@@ -29,14 +29,14 @@ public class ModelMapper {
     }
 
     public SheetModel to(Class<?> clazz) {
-        Optional<ExcelSheet> annotationSheet = AnnotationInClass.getClassAnnotation(clazz, ExcelSheet.class);
-        Optional<ExcelSheets> annotationSheets = AnnotationInClass.getClassAnnotation(clazz, ExcelSheets.class);
-        Optional<List<Field>> fieldContainAnnotation = AnnotationInClass.getFieldContainAnnotation(clazz, ExcelCell.class);
+        Optional<Page> annotationSheet = AnnotationInClass.getClassAnnotation(clazz, Page.class);
+        Optional<Book> annotationSheets = AnnotationInClass.getClassAnnotation(clazz, Book.class);
+        Optional<List<Field>> fieldContainAnnotation = AnnotationInClass.getFieldContainAnnotation(clazz, Box.class);
         //deux present ou les deux absents
         if (annotationSheet.isPresent() == annotationSheets.isPresent()) {
-            throw new RuntimeException("ExcelSheet or ExcelSheets mandatory");
+            throw new ModelMapperException("ExcelSheet or ExcelSheets mandatory");
         }
-        //Conditions.requireNonNull(annotationSheet, "ExcelSheet annotation not found");
+        //
         Conditions.requireNonNull(fieldContainAnnotation, "No fields found with ExcelCell annotation");
         //
         return SheetModel.annotationSheets(annotationSheets.orElse(null))

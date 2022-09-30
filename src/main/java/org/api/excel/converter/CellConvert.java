@@ -1,9 +1,8 @@
 package org.api.excel.converter;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
-import org.api.excel.annotations.ExcelCell;
+import org.api.excel.annotations.Box;
 import org.api.excel.exception.CellConvertException;
 import org.api.excel.utils.Debug;
 
@@ -24,7 +23,7 @@ public class CellConvert {
         return instance;
     }
 
-    public Object value(ExcelCell annotation, Cell cell) {
+    public Object value(Box annotation, org.apache.poi.ss.usermodel.Cell cell) {
         Debug.print(this.getClass(), () -> "cell column index {0} ", cell.getColumnIndex());
         if (annotation.stringFormat()) {
             return returnStringValue(cell);
@@ -32,7 +31,7 @@ public class CellConvert {
         return returnValue(cell);
     }
 
-    private Object returnValue(Cell cell) {
+    private Object returnValue(org.apache.poi.ss.usermodel.Cell cell) {
 
         CellType cellType = cell.getCellType();
         switch (cellType) {
@@ -57,7 +56,7 @@ public class CellConvert {
         }
     }
 
-    public String returnStringValue(Cell cell) {
+    public String returnStringValue(org.apache.poi.ss.usermodel.Cell cell) {
         Debug.print(this.getClass(), () -> "stringValue -> type de cellule {0} value {1}", cell.getCellType(), cell);
         CellType cellType = cell.getCellType();
 

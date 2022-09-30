@@ -1,21 +1,22 @@
-package org.api.excel.sample;
+package sample;
 
-import org.api.excel.annotations.ExcelCell;
-import org.api.excel.annotations.ExcelSheet;
+import org.api.excel.annotations.Box;
+import org.api.excel.annotations.Page;
+import org.api.excel.annotations.Book;
 
-@ExcelSheet(name = "Feuil1")
-public class Personne {
-    @ExcelCell(stringFormat = true)
+@Book(value = {@Page(name = "Feuil2", rowNumber = 9)})
+public class Personne2 {
+    @Box(stringFormat = true)
     private String name;
-    @ExcelCell(number = 1)
+    @Box(number = 1)
     private String company;
-    @ExcelCell(number = 2)
+    @Box(number = 2)
     private String address;
-    @ExcelCell(number = 3, stringFormat = true)
+    @Box(number = 3, stringFormat = true)
     private String postalZip;
-    @ExcelCell(number = 4)
+    @Box(number = 4)
     private String city;
-    @ExcelCell(number = 5)
+    @Box(number = 5)
     private String guid;
 
     public String getName() {

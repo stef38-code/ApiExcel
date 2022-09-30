@@ -1,6 +1,6 @@
 package org.api.excel.model;
 
-import org.api.excel.annotations.ExcelCell;
+import org.api.excel.annotations.Box;
 import org.api.excel.annotations.business.AnnotationInClass;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
-class CellModelTest {
+class BoxModelTest {
     /**
      * Methods under test:
      *
@@ -48,12 +48,12 @@ class CellModelTest {
      */
     @Test
     void build_then_Class_when_CellModelValue() {
-        Optional<List<Field>> fieldContainAnnotation = AnnotationInClass.getFieldContainAnnotation(MyClass2.class, ExcelCell.class);
+        Optional<List<Field>> fieldContainAnnotation = AnnotationInClass.getFieldContainAnnotation(MyClass2.class, Box.class);
         Assertions.assertThat(fieldContainAnnotation).isPresent().containsInstanceOf(List.class);
         List<Field> fields = fieldContainAnnotation.get();
         Assertions.assertThat(fields).isNotEmpty().hasSize(1);
         CellModel build = CellModel.builder().field(fields.get(0)).build();
-        Assertions.assertThat(build.getAnnotation()).isNotNull().isInstanceOf(ExcelCell.class);
+        Assertions.assertThat(build.getAnnotation()).isNotNull().isInstanceOf(Box.class);
         Assertions.assertThat(build.getField()).isNotNull();
     }
 
@@ -62,7 +62,7 @@ class CellModelTest {
     }
 
     private static class MyClass2 {
-        @ExcelCell
+        @Box
         public String name;
     }
 }

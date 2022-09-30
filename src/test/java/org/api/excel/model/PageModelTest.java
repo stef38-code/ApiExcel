@@ -1,7 +1,7 @@
 package org.api.excel.model;
 
-import org.api.excel.annotations.ExcelSheet;
-import org.api.excel.annotations.ExcelSheets;
+import org.api.excel.annotations.Page;
+import org.api.excel.annotations.Book;
 import org.api.excel.annotations.business.AnnotationInClass;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 import java.util.Optional;
 
-class SheetModelTest {
+class PageModelTest {
 
     /**
      * Methods under test:
      *
      * <ul>
-     *   <li>{@link SheetModel##annotationSheets(ExcelSheets)#builder()}
+     *   <li>{@link SheetModel##annotationSheets(Book)#builder()}
      * </ul>
      */
     @Test
@@ -30,12 +30,12 @@ class SheetModelTest {
      * Methods under test:
      *
      * <ul>
-     *   <li>{@link SheetModel#annotationSheets(ExcelSheets)#builder()}
+     *   <li>{@link SheetModel#annotationSheets(Book)#builder()}
      * </ul>
      */
     @Test
     void build_then_sheetAnnotationIsNull_when_NullPointerException() {
-        ExcelSheet annotation = null;
+        Page annotation = null;
         Assertions.assertThatThrownBy(SheetModel.annotationSheets(null).sheetAnnotation(annotation)::build)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("the annotation cannot is null");
@@ -46,13 +46,13 @@ class SheetModelTest {
      * Methods under test:
      *
      * <ul>
-     *   <li>{@link SheetModel##annotationSheets(ExcelSheets)#builder()}
+     *   <li>{@link SheetModel##annotationSheets(Book)#builder()}
      * </ul>
      */
     @Test
     void build_then_cellModelsIsNull_when_NullPointerException() {
-        Optional<ExcelSheet> classAnnotation = AnnotationInClass.getClassAnnotation(MyClass.class, ExcelSheet.class);
-        ExcelSheet annotation = classAnnotation.get();
+        Optional<Page> classAnnotation = AnnotationInClass.getClassAnnotation(MyClass.class, Page.class);
+        Page annotation = classAnnotation.orElse(null);
         Assertions.assertThatThrownBy(SheetModel.annotationSheets(null).sheetAnnotation(annotation)::build)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("the Collection cannot be null");
@@ -63,20 +63,20 @@ class SheetModelTest {
      * Methods under test:
      *
      * <ul>
-     *   <li>{@link SheetModel#annotationSheets(ExcelSheets)#builder()}
+     *   <li>{@link SheetModel#annotationSheets(Book)#builder()}
      * </ul>
      */
     @Test
     void build_then_cellModelsIsEmpty_when_IllegalArgumentException() {
-        Optional<ExcelSheet> classAnnotation = AnnotationInClass.getClassAnnotation(MyClass.class, ExcelSheet.class);
-        ExcelSheet annotation = classAnnotation.get();
+        Optional<Page> classAnnotation = AnnotationInClass.getClassAnnotation(MyClass.class, Page.class);
+        Page annotation = classAnnotation.get();
         Assertions.assertThatThrownBy(SheetModel.annotationSheets(null).sheetAnnotation(annotation).cellModels(Collections.EMPTY_LIST)::build)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("the Collection cannot be empty");
 
     }
 
-    @ExcelSheet
+    @Page
     private class MyClass {
 
     }

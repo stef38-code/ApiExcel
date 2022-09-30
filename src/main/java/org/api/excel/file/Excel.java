@@ -1,10 +1,9 @@
 package org.api.excel.file;
 
 import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.api.excel.annotations.ExcelSheet;
+import org.api.excel.annotations.Page;
 import org.api.excel.exception.ExcelException;
 import org.api.excel.utils.Conditions;
 
@@ -26,13 +25,13 @@ public class Excel {
         }
     }
 
-    public static Sheet getSheetSelected(ExcelSheet excelSheet, Workbook workbook) {
-        Objects.requireNonNull(excelSheet, "ExcelSheet cannot be null");
+    public static org.apache.poi.ss.usermodel.Sheet getSheetSelected(Page page, Workbook workbook) {
+        Objects.requireNonNull(page, "ExcelSheet cannot be null");
 
-        if (excelSheet.name().isBlank())
-            return workbook.getSheetAt(excelSheet.number());
+        if (page.name().isBlank())
+            return workbook.getSheetAt(page.number());
 
-        return workbook.getSheet(excelSheet.name());
+        return workbook.getSheet(page.name());
     }
 
     public static void close(Workbook workbook) throws ExcelException {

@@ -1,8 +1,8 @@
 package org.api.excel.parser;
 
-import org.api.excel.sample.Personne;
-import org.api.excel.sample.Personne2;
-import org.api.excel.sample.Personne3;
+import sample.Personne;
+import sample.Personne2;
+import sample.Personne3;
 import org.junit.jupiter.api.Test;
 import tools.FileUtil;
 

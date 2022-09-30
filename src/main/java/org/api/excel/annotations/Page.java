@@ -10,8 +10,8 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Repeatable(ExcelSheets.class)
-public @interface ExcelSheet {
+@Repeatable(Book.class)
+public @interface Page {
     /**
      * Sheet Number int.
      *

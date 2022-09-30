@@ -1,7 +1,7 @@
 package org.api.excel.services;
 
 import org.api.excel.exception.ClassServiceException;
-import org.api.excel.sample.Sample;
+import sample.Sample;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

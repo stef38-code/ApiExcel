@@ -1,5 +1,7 @@
 package org.api.excel.annotations;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.lang.annotation.*;
 
 /**
@@ -8,14 +10,14 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExcelCell {
+public @interface Box {//book,page//box
     /**
      * Number int.
      *
      * @return the int
      */
     int number() default 0;
-
+    String name() default StringUtils.EMPTY;
     /**
      * String format boolean.
      *

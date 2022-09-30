@@ -1,17 +1,17 @@
-package org.api.excel.sample;
+package sample;
 
-import org.api.excel.annotations.ExcelCell;
-import org.api.excel.annotations.ExcelSheet;
+import org.api.excel.annotations.Box;
+import org.api.excel.annotations.Page;
 
 import java.time.LocalDate;
 
-@ExcelSheet
+@Page
 public class Sample {
-    @ExcelCell
+    @Box
     private String firstname;
-    @ExcelCell
+    @Box
     private String lastname;
-    @ExcelCell
+    @Box
     private int age;
     private LocalDate toDay;
     private String stringValue;

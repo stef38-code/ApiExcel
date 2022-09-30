@@ -1,10 +1,8 @@
 package org.api.excel.services;
 
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.api.excel.annotations.ExcelSheet;
-import org.api.excel.annotations.ExcelSheets;
+import org.api.excel.annotations.Page;
+import org.api.excel.annotations.Book;
 import org.api.excel.converter.RowConverter;
 import org.api.excel.exception.ExcelException;
 import org.api.excel.exception.WorkbookServiceException;
@@ -20,8 +18,8 @@ import java.util.List;
 
 public class WorkbookService<T> {
     private static final Logger log = LoggerFactory.getLogger(WorkbookService.class);
-    private final RowsService rowsService;//= new RowsService();
-    private final RowConverter rowConverter;//= RowConverter.getInstance();
+    private final RowsService rowsService;
+    private final RowConverter rowConverter;
 
     public WorkbookService() {
         this.rowsService = new RowsService();
@@ -30,9 +28,9 @@ public class WorkbookService<T> {
 
     public void execute(SheetModel sheetModel, String file, List<T> list, Class<T> aClass) {
         log.info("Traitement: {}", file);
-        try (Workbook workbook = Excel.read(file)) {
+        try (org.apache.poi.ss.usermodel.Workbook workbook = Excel.read(file)) {
             log.info("-> Workbook");
-            ExcelSheets annotationSheets = sheetModel.getAnnotationSheets();
+            Book annotationSheets = sheetModel.getAnnotationSheets();
             List<CellModel> cellModels = sheetModel.getCellModels();
             Arrays.stream(annotationSheets.value()).forEach(annotationSheet -> forRowsInSheet(list, aClass, annotationSheet, cellModels, workbook));
             Excel.close(workbook);
@@ -41,12 +39,12 @@ public class WorkbookService<T> {
         }
     }
 
-    private void forRowsInSheet(List<T> list, Class<T> aClass, ExcelSheet annotationSheet, List<CellModel> cellModels, Workbook workbook) {
+    private void forRowsInSheet(List<T> list, Class<T> aClass, Page annotationPage, List<CellModel> cellModels, org.apache.poi.ss.usermodel.Workbook workbook) {
 
-        Sheet sheet = Excel.getSheetSelected(annotationSheet, workbook);
+        org.apache.poi.ss.usermodel.Sheet sheet = Excel.getSheetSelected(annotationPage, workbook);
         log.info("--> Sheet Name: {}", sheet.getSheetName());
         log.info("---> Rows");
-        List<Row> rows = rowsService.extractDataRows(sheet.rowIterator(), annotationSheet.rowNumber());
+        List<Row> rows = rowsService.extractDataRows(sheet.rowIterator(), annotationPage.rowNumber());
         readDataRows(rows, aClass, cellModels, list);
     }
 

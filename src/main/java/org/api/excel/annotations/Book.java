@@ -8,11 +8,11 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExcelSheets {
+public @interface Book {
     /**
      * Value excel sheet [ ].
      *
      * @return the excel sheet [ ]
      */
-    ExcelSheet[] value() default {};
+    Page[] value() default {};
 }

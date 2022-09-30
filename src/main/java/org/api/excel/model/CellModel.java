@@ -1,13 +1,13 @@
 package org.api.excel.model;
 
-import org.api.excel.annotations.ExcelCell;
+import org.api.excel.annotations.Box;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
 
 public class CellModel {
     private final Field field;
-    private final ExcelCell annotation;
+    private final Box annotation;
 
     private CellModel(Builder builder) {
         Objects.requireNonNull( builder.field,"the field cannot is null");
@@ -20,7 +20,7 @@ public class CellModel {
         return field;
     }
 
-    public ExcelCell getAnnotation() {
+    public Box getAnnotation() {
         return annotation;
     }
     public static Builder builder() {
@@ -29,13 +29,13 @@ public class CellModel {
     public static final class Builder {
 
         private Field field;
-        private ExcelCell annotation;
+        private Box annotation;
 
         private Builder() {
         }
 
         public Builder field(Field field) {
-            this.annotation = field.getAnnotation(ExcelCell.class);
+            this.annotation = field.getAnnotation(Box.class);
             this.field = field;
             return this;
         }

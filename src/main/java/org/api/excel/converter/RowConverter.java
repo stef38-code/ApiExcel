@@ -1,8 +1,7 @@
 package org.api.excel.converter;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.api.excel.annotations.ExcelCell;
+import org.api.excel.annotations.Box;
 import org.api.excel.exception.RowConverterException;
 import org.api.excel.model.CellModel;
 import org.api.excel.reflection.Reflective;
@@ -29,10 +28,10 @@ public class RowConverter {
         return instance;
     }
 
-    private <T> void setField(T entity, Field field, Cell cell) {
+    private <T> void setField(T entity, Field field, org.apache.poi.ss.usermodel.Cell cell) {
         Objects.requireNonNull(cell,"cell cannot null !!");
         try {
-            Reflective.setterField(entity, field.getName(), cellConvert.value(field.getAnnotation(ExcelCell.class), cell));
+            Reflective.setterField(entity, field.getName(), cellConvert.value(field.getAnnotation(Box.class), cell));
         } catch (ReflectiveOperationException e) {
             throw new RowConverterException(e);
         }
@@ -51,9 +50,9 @@ public class RowConverter {
 
     private <T> void toField(Row row, T entity, CellModel cellModel) {
         Field field = cellModel.getField();
-        int position = field.getAnnotation(ExcelCell.class).number();
+        int position = field.getAnnotation(Box.class).number();
         Debug.print(this.getClass(),()->"Position definie dans la classe {0}",field.getName(),position);
-        Cell cell = row.getCell(position);
+        org.apache.poi.ss.usermodel.Cell cell = row.getCell(position);
         setField(entity, cellModel.getField(), cell);
     }
 }
