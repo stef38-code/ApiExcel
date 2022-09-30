@@ -60,10 +60,10 @@ public class ClassService<T> {
 
         public ClassService<C> build() {
             try {
-                Debug.print(this.getClass(), () -> "Create new instance: {0}", cClass.getSimpleName());
+                Debug.print(this, "Create new instance: {0}", cClass.getSimpleName());
                 this.instance = Reflective.createInstance(cClass);
                 for (Map.Entry<String, Object> field : fields.entrySet()) {
-                    Debug.print(this.getClass(), () -> "set field: {0}, type value: {1}", field.getKey(), field.getValue().getClass().getSimpleName());
+                    Debug.print(this, "set field: {0}, type value: {1}", field.getKey(), field.getValue().getClass().getSimpleName());
                     Reflective.setterField(this.instance, field.getKey(), field.getValue());
                 }
             } catch (ReflectiveOperationException e) {

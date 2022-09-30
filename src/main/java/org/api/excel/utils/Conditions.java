@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * The type Conditions.
+ * Collection de préconditions
  */
 public class Conditions extends Require {
     private Conditions() {
@@ -16,7 +16,7 @@ public class Conditions extends Require {
     }
 
     /**
-     * Require not empty.
+     * Collection not empty.
      *
      * @param <T>        the type parameter
      * @param collection the collection
@@ -27,6 +27,12 @@ public class Conditions extends Require {
         positiveTest(collection, Collection::isEmpty, msg);
     }
 
+    /**
+     * Array not empty.
+     *
+     * @param objects the objects
+     * @param msg     the msg
+     */
     public static void requireNotEmpty(Object[] objects, String msg) {
         Objects.requireNonNull(objects, "the Collection cannot be null");
         List<Object> collect = Arrays.stream(objects).collect(Collectors.toList());
@@ -36,7 +42,7 @@ public class Conditions extends Require {
     }
 
     /**
-     * Require non null.
+     * Optional non null.
      *
      * @param value the class annotation
      * @param msg   the msg
@@ -46,14 +52,10 @@ public class Conditions extends Require {
                 , () -> {
                     throw new IllegalArgumentException(msg);
                 });
-        /*if (!value.isPresent()) {
-            throw new IllegalArgumentException(msg);
-        }
-        Objects.requireNonNull(value.get(), "the value cannot be null");*/
     }
 
     /**
-     * Require not blank.
+     * String not blank.
      *
      * @param stringValue the string value
      */
@@ -65,7 +67,7 @@ public class Conditions extends Require {
      * Require file and exists.
      *
      * @param stringValue the string value
-     * @return
+     * @return file
      */
     public static File requireFileAndExists(String stringValue) {
         requireNotEmpty(stringValue);

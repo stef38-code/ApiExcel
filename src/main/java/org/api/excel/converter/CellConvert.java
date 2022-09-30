@@ -24,7 +24,8 @@ public class CellConvert {
     }
 
     public Object value(Box annotation, org.apache.poi.ss.usermodel.Cell cell) {
-        Debug.print(this.getClass(), () -> "cell column index {0} ", cell.getColumnIndex());
+        Debug.print(this, "cell column index {0} ", cell.getColumnIndex());
+        Debug.print(this,  "cell column index {0} ", cell.getColumnIndex());
         if (annotation.stringFormat()) {
             return returnStringValue(cell);
         }
@@ -57,7 +58,7 @@ public class CellConvert {
     }
 
     public String returnStringValue(org.apache.poi.ss.usermodel.Cell cell) {
-        Debug.print(this.getClass(), () -> "stringValue -> type de cellule {0} value {1}", cell.getCellType(), cell);
+        Debug.print(this,  "stringValue -> type de cellule {0} value {1}", cell.getCellType(), cell);
         CellType cellType = cell.getCellType();
 
         switch (cellType) {
