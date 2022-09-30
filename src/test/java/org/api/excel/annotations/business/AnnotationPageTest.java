@@ -1,7 +1,7 @@
 package org.api.excel.annotations.business;
 
-import org.api.excel.annotations.Page;
 import org.api.excel.annotations.Book;
+import org.api.excel.annotations.Page;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -26,9 +26,11 @@ class AnnotationPageTest {
         Class<ChangeValues> tClass = ChangeValues.class;
         Optional<Page> classAnnotation = AnnotationInClass.getClassAnnotation(tClass, Page.class);
         assertThat(classAnnotation).isNotNull();
-        assertThat(classAnnotation.get().name()).hasToString("Test");
-        assertThat(classAnnotation.get().number()).isEqualTo(99);
-        assertThat(classAnnotation.get().rowNumber()).isEqualTo(25);
+        Page page = classAnnotation.orElse(null);
+        assertThat(page).isNotNull();
+        assertThat(page.name()).hasToString("Test");
+        assertThat(page.number()).isEqualTo(99);
+        assertThat(page.rowNumber()).isEqualTo(25);
     }
 
     @Test
@@ -41,17 +43,17 @@ class AnnotationPageTest {
     }
 
     @Page
-    private class DefaultValue {
+    private static class DefaultValue {
 
     }
 
     @Page(name = "Test", number = 99, rowNumber = 25)
-    private class ChangeValues {
+    private static class ChangeValues {
 
     }
 
     @Book(value = {})
-    private class DefaultExcelSheet {
+    private static class DefaultExcelSheet {
 
     }
 }

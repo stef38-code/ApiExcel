@@ -18,20 +18,25 @@ class ParseExcelBenchMarkIT {
     private static final long MEGABYTE = 1024L * 1024L;
     private static final Logger log = LoggerFactory.getLogger(ParseExcelBenchMarkIT.class);
 
-    /** 1 000 lines
+    /**
+     *
+     * 1 000 lines
      * 13:52:59.560 [INFO ] - Used memory is bytes: 10942352
      * 13:52:59.560 [INFO ] - Used memory is megabytes: 10
      * 13:52:59.561 [INFO ] - Elapsed Time in second: 0 s
      *
+     * <p>
      * 10 000 lines
      * 13:52:59.359 [INFO ] - Used memory is bytes: 14604448
      * 13:52:59.359 [INFO ] - Used memory is megabytes: 13
      * 13:52:59.359 [INFO ] - Elapsed Time in second: 1 s
+     * <p>
      *
      * 100 000 lines
      * 13:52:57.585 [INFO ] - Used memory is bytes: 51023016
      * 13:52:57.585 [INFO ] - Used memory is megabytes: 48
      * 13:52:57.586 [INFO ] - Elapsed Time in second: 12 s
+     *
      */
 
     public static long bytesToMegabytes(long bytes) {
