@@ -24,7 +24,7 @@ public class CellService {
         return BoxBuilder.box(box).cell(cell).build();
     }
 
-    public void findPosition(CellModel cellModel, Iterator<Cell> cells) {
+    public CellModel findPosition(CellModel cellModel, Iterator<Cell> cells) {
         Box box = cellModel.getAnnotation();
         String name = box.name();
         Optional<Cell> optionalCell = getStream(cells).filter(cell ->
@@ -32,8 +32,9 @@ public class CellService {
         ).findFirst();
         if (optionalCell.isPresent()) {
             Cell cell = optionalCell.get();
-            Info.print(this, "cellAnnotation[{0},{1}] trouvé: {2},{3}", name, box.number(), cell.getColumnIndex(), cell.getStringCellValue());
-            cellModel = CellModel.duplique(cellModel).annotation(getAnnotation(box, cell)).build();
+            Info.print(this, "Remplace annotation [{0},{1}] par [{3},{2}]", name, box.number(), cell.getColumnIndex(), cell.getStringCellValue());
+            return CellModel.duplique(cellModel).annotation(getAnnotation(box, cell)).build();
         }
+        return cellModel;
     }
 }

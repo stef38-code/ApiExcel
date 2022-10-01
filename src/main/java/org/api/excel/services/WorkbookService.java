@@ -17,10 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class WorkbookService<T> {
     private static final Logger log = LoggerFactory.getLogger(WorkbookService.class);
@@ -56,17 +53,18 @@ public class WorkbookService<T> {
         Optional<Row> headerRow = rowsService.getRowsHeader(sheet.rowIterator(), annotationPage.rowNumber());
         Conditions.requireNonNull(headerRow, "Row header cannot be null");
         Row row = headerRow.get();
+        List<CellModel> cellModelCorrecte = new ArrayList<>();
         cellModels.forEach(
                 cellModel -> {
                     //Recherche si une colonne contient le nom définit
                     Iterator<Cell> cellIterator = row.cellIterator();
-                    cellService.findPosition(cellModel, cellIterator);
+                    cellModelCorrecte.add(cellService.findPosition(cellModel, cellIterator));
                 }
         );
         //Remplace la liste par une nouvelle qui ne contient en plus la position de la colonne en plus de sont nom
 
         List<Row> rows = rowsService.extractDataRows(sheet.rowIterator(), annotationPage.rowNumber());
-        readDataRows(rows, aClass, cellModels, list);
+        readDataRows(rows, aClass, cellModelCorrecte, list);
     }
 
     private void readDataRows(List<Row> rows, Class<T> tClass, List<CellModel> cellModels, List<T> list) {

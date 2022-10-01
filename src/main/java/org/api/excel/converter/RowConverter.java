@@ -44,7 +44,9 @@ public class RowConverter {
         Debug.print(this, "---> Convert row number {0} to class {1} ", row.getRowNum(), tClass.getName());
         try {
             T entity = Reflective.createInstance(tClass);
-            cellModels.forEach(cellModel -> this.toField(row, entity, cellModel));
+            cellModels.forEach(cellModel -> {
+                this.toField(row, entity, cellModel.getAnnotation(), cellModel.getField());
+            });
             Debug.print(this, "{0}", ReflectionToStringBuilder.toString(entity, ToStringStyle.SHORT_PREFIX_STYLE));
             return entity;
         } catch (ReflectiveOperationException e) {
@@ -52,11 +54,9 @@ public class RowConverter {
         }
     }
 
-    private <T> void toField(Row row, T entity, CellModel cellModel) {
-        Field field = cellModel.getField();
-        int position = field.getAnnotation(Box.class).number();
-        Debug.print(this, "Position {1} definie dans la classe {0}", field.getName(), position);
-        Cell cell = row.getCell(position);
-        setField(entity, cellModel.getField(), cell);
+    private <T> void toField(Row row, T entity, Box annotation, Field field) {
+        Cell cell = row.getCell(annotation.number());
+        setField(entity, field, cell);
     }
+
 }
