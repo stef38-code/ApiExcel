@@ -3,8 +3,6 @@ package org.api.excel.parser;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import sample.Personne;
-import sample.Personne2;
-import sample.Personne3;
 import tools.FileUtil;
 
 import java.util.List;
@@ -19,7 +17,7 @@ class ParseExcelTest {
         String excelFile = FileUtil.getAbsolutePath("blank.xlsx");
         ParseExcel.Builder<Personne> personneBuilder = ParseExcel.clazz(Personne.class)
                 .file(excelFile);
-        Assertions.assertThatThrownBy(() -> personneBuilder.build())
+        Assertions.assertThatThrownBy(personneBuilder::build)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Sheet Is Empty");
     }
@@ -34,65 +32,4 @@ class ParseExcelTest {
         assertThat(optional).isNotPresent();
     }
 
-    @Test
-    void toEntities_Lorsque_RowHeaderOtherOne_Attend_ListEntities() {
-        //Conditions préalables (given)
-        String excelFile = FileUtil.getAbsolutePath("exemple.xls");
-        //Une action se produit (when)
-        Optional<List<Personne2>> optional = ParseExcel.clazz(Personne2.class)
-                .file(excelFile)
-                .build();
-        //Vérifier la sortie (then)
-        assertThat(optional).isPresent()
-                .containsInstanceOf(List.class);
-        List<Personne2> personnes = optional.get();
-        assertThat(personnes).isNotEmpty().hasSize(30);
-    }
-
-    @Test
-    void toEntities_Lorsque_MultiAnnotationExcelSheets_Attend_ListEntities() {
-        //Conditions préalables (given)
-        String excelFile = FileUtil.getAbsolutePath("exemple.xls");
-        //Une action se produit (when)
-        Optional<List<Personne3>> optional = ParseExcel.clazz(Personne3.class)
-                .file(excelFile)
-                .build();
-        //Vérifier la sortie (then)
-        assertThat(optional).isPresent()
-                .containsInstanceOf(List.class);
-        List<Personne3> personnes = optional.get();
-        assertThat(personnes).isNotEmpty().hasSize(90);
-    }
-
-    @Test
-    void toEntities_Lorsque_FileExcel_Attend_ListEntities() {
-        //Conditions préalables (given)
-        String excelFile = FileUtil.getAbsolutePath("exemple.xls");
-        //Une action se produit (when)
-        Optional<List<Personne>> optional = ParseExcel.clazz(Personne.class)
-                .file(excelFile)
-                .build();
-        //Vérifier la sortie (then)
-        assertThat(optional).isPresent()
-                .containsInstanceOf(List.class);
-        List<Personne> personnes = optional.get();
-        assertThat(personnes).isNotEmpty().hasSize(30);
-    }
-
-    @Test
-    void toEntities_Lorsque_TwoFileExcel_Attend_ListEntities() {
-        //Conditions préalables (given)
-        String excelFile = FileUtil.getAbsolutePath("exemple.xls");
-        String excelFile2 = FileUtil.getAbsolutePath("exemple.xlsx");
-        //Une action se produit (when)
-        Optional<List<Personne>> optional = ParseExcel.clazz(Personne.class)
-                .file(excelFile)
-                .file(excelFile2)
-                .build();
-        //Vérifier la sortie (then)
-        assertThat(optional).isPresent()
-                .containsInstanceOf(List.class);
-        List<Personne> personnes = optional.get();
-        assertThat(personnes).isNotEmpty().hasSize(60);
-    }
 }

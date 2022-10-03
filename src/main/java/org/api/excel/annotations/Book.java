@@ -3,7 +3,7 @@ package org.api.excel.annotations;
 import java.lang.annotation.*;
 
 /**
- * The interface Excel sheet.
+ * The interface Excel workbook.
  */
 @Documented
 @Target(ElementType.TYPE)

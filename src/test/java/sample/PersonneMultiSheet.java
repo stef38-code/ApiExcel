@@ -4,12 +4,13 @@ import org.api.excel.annotations.Box;
 import org.api.excel.annotations.Page;
 import org.api.excel.annotations.Book;
 
+@SuppressWarnings("unused")
 @Book(value = {
         @Page(name = "Feuil1"),
         @Page(name = "Feuil2", rowNumber = 9),
         @Page(number = 2)
 })
-public class Personne3 {
+public class PersonneMultiSheet {
     @Box(stringFormat = true)
     private String name;
     @Box(number = 1)

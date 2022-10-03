@@ -1,64 +1,72 @@
 package org.api.excel.parser;
 
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.api.excel.mapping.ModelMapper;
-import org.api.excel.model.SheetModel;
-import org.api.excel.services.WorkbookService;
+import org.api.excel.services.FileService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ParseExcel<T> {
-
-    private final List<T> entities;
-
-    private ParseExcel(Builder<T> builder) {
-        this.entities = builder.listEntities;
-    }
-
+/**
+ * Classe permettant de convertir un fichier Xls ou Xlsx en une liste d'une classe
+ * *
+ *
+ */
+public class ParseExcel {
+private ParseExcel() {
+    throw new UnsupportedOperationException("ParseExcel is a utility class and cannot be instantiated");
+}
+    /**
+     * Clazz builder.
+     *
+     * @param <T>   the type parameter
+     * @param clazz the clazz
+     * @return the builder
+     */
     public static <T> Builder<T> clazz(Class<T> clazz) {
         return new Builder<T>().clazz(clazz);
     }
 
-    private List<T> getEntities() {
-        return this.entities;
-    }
-
+    /**
+     * The type Builder.
+     *
+     * @param <T> the type parameter
+     */
     public static final class Builder<T> {
-        private final WorkbookService<T> workbookService = new WorkbookService<>();
-        private final List<T> listEntities;
-        private Class<T> tClass;
+        private final FileService<T> fileService = new FileService<>();
         private final List<String> files;
+        private Class<T> tClass;
 
         private Builder() {
             this.files = new ArrayList<>();
-            this.listEntities = new ArrayList<>();
         }
 
+        /**
+         * Clazz builder.
+         *
+         * @param obj the obj
+         * @return the builder
+         */
         public Builder<T> clazz(Class<T> obj) {
             this.tClass = obj;
             return this;
         }
 
+        /**
+         * Build optional.
+         *
+         * @return the optional
+         */
         public Optional<List<T>> build() {
-            //Analyse la classe source
-            ModelMapper mapper = ModelMapper.getInstance();
-            SheetModel sheetModel = mapper.to(tClass);
-            /*
-             * les fichiers
-             */
-            for (String file : files) {
-                workbookService.execute(sheetModel, file, listEntities, tClass);
-            }
-            List<T> entities = new ParseExcel<>(this).getEntities();
-            if(CollectionUtils.isNotEmpty(entities)) {
-                return Optional.of(entities);
-            }
-            return Optional.empty();
+            return fileService.execute(tClass, files);
         }
 
+        /**
+         * File builder.
+         *
+         * @param excelFile the excel file
+         * @return the builder
+         */
         public Builder<T> file(String excelFile) {
             files.add(excelFile);
 

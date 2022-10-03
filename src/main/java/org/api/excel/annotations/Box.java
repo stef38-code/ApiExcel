@@ -17,6 +17,12 @@ public @interface Box {//book,page//box
      * @return the int
      */
     int number() default 0;
+
+    /**
+     * character string contained in the cell
+     *
+     * @return int
+     */
     String name() default StringUtils.EMPTY;
     /**
      * String format boolean.
