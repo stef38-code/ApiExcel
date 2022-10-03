@@ -47,24 +47,29 @@ public class WorkbookService<T> {
     private void forRowsInSheet(List<T> list, Class<T> aClass, Page annotationPage, List<CellModel> cellModels, Workbook workbook) {
 
         Sheet sheet = Excel.getSheetSelected(annotationPage, workbook);
+        Conditions.requireSheetIsNotEmpty(sheet);
         log.info("--> Sheet Name: {}", sheet.getSheetName());
         log.info("---> Rows");
         //Extraction de la premiere ligne pour trouver l'index des colonnes en fonction du nom
         Optional<Row> headerRow = rowsService.getRowsHeader(sheet.rowIterator(), annotationPage.rowNumber());
         Conditions.requireNonNull(headerRow, "Row header cannot be null");
-        Row row = headerRow.get();
-        List<CellModel> cellModelCorrecte = new ArrayList<>();
-        cellModels.forEach(
-                cellModel -> {
-                    //Recherche si une colonne contient le nom définit
-                    Iterator<Cell> cellIterator = row.cellIterator();
-                    cellModelCorrecte.add(cellService.findPosition(cellModel, cellIterator));
+        headerRow.ifPresent(
+                row->{
+                    List<CellModel> cellModelCorrecte = new ArrayList<>();
+                    cellModels.forEach(
+                            cellModel -> {
+                                //Recherche si une colonne contient le nom définit
+                                Iterator<Cell> cellIterator = row.cellIterator();
+                                cellModelCorrecte.add(cellService.findPosition(cellModel, cellIterator));
+                            }
+                    );
+                    //Remplace la liste par une nouvelle qui ne contient en plus la position de la colonne en plus de sont nom
+
+                    List<Row> rows = rowsService.extractDataRows(sheet.rowIterator(), annotationPage.rowNumber());
+                    readDataRows(rows, aClass, cellModelCorrecte, list);
                 }
         );
-        //Remplace la liste par une nouvelle qui ne contient en plus la position de la colonne en plus de sont nom
 
-        List<Row> rows = rowsService.extractDataRows(sheet.rowIterator(), annotationPage.rowNumber());
-        readDataRows(rows, aClass, cellModelCorrecte, list);
     }
 
     private void readDataRows(List<Row> rows, Class<T> tClass, List<CellModel> cellModels, List<T> list) {

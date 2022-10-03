@@ -1,6 +1,7 @@
 package org.api.excel.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Sheet;
 
 import java.io.File;
 import java.util.*;
@@ -47,7 +48,7 @@ public class Conditions extends Require {
      * @param value the class annotation
      * @param msg   the msg
      */
-    public static void requireNonNull(Optional value, String msg) {
+    public static <T> void requireNonNull(Optional<T> value, String msg) {
         value.ifPresentOrElse(v -> Objects.requireNonNull(value.get(), "the value cannot be null")
                 , () -> {
                     throw new IllegalArgumentException(msg);
@@ -95,5 +96,12 @@ public class Conditions extends Require {
     public static void requireIsFile(File file) {
         Objects.requireNonNull(file, "File cannot be null");
         positiveTest(file, Predicate.not(File::isFile), "Is not file");
+    }
+
+    public static void requireSheetIsNotEmpty(Sheet sheet) {
+        Predicate<Sheet> lastRowNumIsEmpty = s -> (s.getLastRowNum() == -1);
+        Predicate<Sheet> getRowZeroIsNull = s -> Objects.isNull(s.getRow(0));
+
+        positiveTest(sheet, lastRowNumIsEmpty.and(getRowZeroIsNull), "Sheet Is Empty");
     }
 }

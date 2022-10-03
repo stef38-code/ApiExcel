@@ -110,3 +110,4 @@ fabric.properties
 !/src/
 /.idea/intellij-javadocs-4.0.1.xml
 /target/
+/.idea/inspectionProfiles/Project_Default.xml
