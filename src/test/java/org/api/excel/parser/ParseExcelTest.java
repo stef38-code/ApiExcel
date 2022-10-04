@@ -1,5 +1,6 @@
 package org.api.excel.parser;
 
+import org.api.excel.parser.builder.ReaderExcel;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import sample.Personne;
@@ -15,7 +16,7 @@ class ParseExcelTest {
     @Test
     void toEntities_then_BlankFile_When_OptionalEmpty() {
         String excelFile = FileUtil.getAbsolutePath("blank.xlsx");
-        ParseExcel.Builder<Personne> personneBuilder = ParseExcel.clazz(Personne.class)
+        ReaderExcel<Personne> personneBuilder = ParseExcel.read(Personne.class)
                 .file(excelFile);
         Assertions.assertThatThrownBy(personneBuilder::build)
                 .isInstanceOf(IllegalArgumentException.class)
@@ -26,7 +27,7 @@ class ParseExcelTest {
     void toEntities_then_NoData_Attend_OptionalEmpty() {
         String excelFile = FileUtil.getAbsolutePath("empty.xlsx");
         //Une action se produit (when)
-        Optional<List<Personne>> optional = ParseExcel.clazz(Personne.class)
+        Optional<List<Personne>> optional = ParseExcel.read(Personne.class)
                 .file(excelFile)
                 .build();
         assertThat(optional).isNotPresent();

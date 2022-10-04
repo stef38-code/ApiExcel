@@ -21,11 +21,6 @@ public class BoxBuilder {
             this.boxOld = boxOld;
         }
 
-        /*public Builder box(Box boxOld) {
-            this.boxOld = boxOld;
-            return this;
-        }*/
-
         public Builder cell(Cell cell) {
             this.cell = cell;
             return this;
@@ -49,10 +44,6 @@ public class BoxBuilder {
                     return boxOld.name();
                 }
 
-                @Override
-                public boolean stringFormat() {
-                    return boxOld.stringFormat();
-                }
             };
         }
     }

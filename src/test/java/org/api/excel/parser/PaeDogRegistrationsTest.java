@@ -14,7 +14,7 @@ class PaeDogRegistrationsTest {
     void parseFile_Lorsque_PaeDogRegistrations2019_Attend_ListSize14567() {
         String excelFile = FileUtil.getAbsolutePath("pae_dog_registrations_2019.xlsx");
         //Une action se produit (when)
-        Optional<List<PaeDogRegistrations>> optional = ParseExcel.clazz(PaeDogRegistrations.class)
+        Optional<List<PaeDogRegistrations>> optional = ParseExcel.read(PaeDogRegistrations.class)
                 .file(excelFile)
                 .build();
         //Vérifier la sortie (then)

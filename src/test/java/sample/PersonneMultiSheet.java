@@ -11,13 +11,13 @@ import org.api.excel.annotations.Book;
         @Page(number = 2)
 })
 public class PersonneMultiSheet {
-    @Box(stringFormat = true)
+    @Box()
     private String name;
     @Box(number = 1)
     private String company;
     @Box(number = 2)
     private String address;
-    @Box(number = 3, stringFormat = true)
+    @Box(number = 3)
     private String postalZip;
     @Box(number = 4)
     private String city;

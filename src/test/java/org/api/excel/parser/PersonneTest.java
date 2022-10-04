@@ -15,7 +15,7 @@ class PersonneTest {
         //Conditions préalables (given)
         String excelFile = FileUtil.getAbsolutePath("personnes.xls");
         //Une action se produit (when)
-        Optional<List<Personne>> optional = ParseExcel.clazz(Personne.class)
+        Optional<List<Personne>> optional = ParseExcel.read(Personne.class)
                 .file(excelFile)
                 .build();
         //Vérifier la sortie (then)
@@ -31,7 +31,7 @@ class PersonneTest {
         String excelFile = FileUtil.getAbsolutePath("personnes.xls");
         String excelFile2 = FileUtil.getAbsolutePath("personnes.xlsx");
         //Une action se produit (when)
-        Optional<List<Personne>> optional = ParseExcel.clazz(Personne.class)
+        Optional<List<Personne>> optional = ParseExcel.read(Personne.class)
                 .file(excelFile)
                 .file(excelFile2)
                 .build();

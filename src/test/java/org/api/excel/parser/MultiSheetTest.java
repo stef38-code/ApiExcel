@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         //Conditions préalables (given)
         String excelFile = FileUtil.getAbsolutePath("personnes.xls");
         //Une action se produit (when)
-        Optional<List<PersonneMultiSheet>> optional = ParseExcel.clazz(PersonneMultiSheet.class)
+        Optional<List<PersonneMultiSheet>> optional = ParseExcel.read(PersonneMultiSheet.class)
                 .file(excelFile)
                 .build();
         //Vérifier la sortie (then)

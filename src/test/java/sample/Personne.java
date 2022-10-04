@@ -6,13 +6,13 @@ import org.api.excel.annotations.Page;
 @Page(name = "Feuil1")
 public class Personne {
 
-    @Box(stringFormat = true, name = "name", number = 99999)
+    @Box( name = "name", number = 99999)
     private String name;
     @Box(number = 1, name = "company")
     private String company;
     @Box(number = 2, name = "address")
     private String address;
-    @Box(number = 3, stringFormat = true, name = "postalZip")
+    @Box(number = 3, name = "postalZip")
     private String postalZip;
     @Box(number = 4, name = "city")
     private String city;

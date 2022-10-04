@@ -5,19 +5,19 @@ import org.api.excel.annotations.Page;
 
 @Page(name = "Sheet 1")
 public class Bench {
-    @Box(stringFormat = true)
+    @Box()
     private String first;
-    @Box(number =1,stringFormat = true)
+    @Box(number =1)
     private String last	;
-    @Box(number =2,stringFormat = true)
+    @Box(number =2)
     private String birthday;
-    @Box(number =3,stringFormat = true)
+    @Box(number =3)
     private String 	gender;
-    @Box(number =4,stringFormat = true)
+    @Box(number =4)
     private String 	phone;
-    @Box(number =5,stringFormat = true)
+    @Box(number =5)
     private String 	email;
-    @Box(number =6,stringFormat = true)
+    @Box(number =6)
     private String 	city;
 
     public String getFirst() {

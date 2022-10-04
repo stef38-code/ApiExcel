@@ -24,10 +24,6 @@ public @interface Box {//book,page//box
      * @return int
      */
     String name() default StringUtils.EMPTY;
-    /**
-     * String format boolean.
-     *
-     * @return the boolean
-     */
-    boolean stringFormat() default false;
+
+
 }

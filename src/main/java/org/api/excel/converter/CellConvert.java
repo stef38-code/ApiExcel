@@ -1,8 +1,10 @@
 package org.api.excel.converter;
 
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
-import org.api.excel.annotations.Box;
 import org.api.excel.exception.CellConvertException;
 import org.api.excel.utils.Debug;
 
@@ -23,16 +25,11 @@ public class CellConvert {
         return instance;
     }
 
-    public Object value(Box annotation, org.apache.poi.ss.usermodel.Cell cell) {
-        Debug.print(this, "cell column index {0} ", cell.getColumnIndex());
-        Debug.print(this,  "cell column index {0} ", cell.getColumnIndex());
-        if (annotation.stringFormat()) {
-            return returnStringValue(cell);
-        }
-        return returnValue(cell);
+    public Object value(Class<?> type, Cell cell) {
+        return ConvertUtils.convert(returnValue(cell), type);
     }
 
-    private Object returnValue(org.apache.poi.ss.usermodel.Cell cell) {
+    private Object returnValue(Cell cell) {
 
         CellType cellType = cell.getCellType();
         switch (cellType) {
@@ -47,7 +44,7 @@ public class CellConvert {
             case ERROR:
                 return String.valueOf(cell.getErrorCellValue());
             case BLANK:
-                return "";
+                return StringUtils.EMPTY;
             case FORMULA:
                 return cell.getCellFormula();
             case BOOLEAN:
@@ -57,8 +54,8 @@ public class CellConvert {
         }
     }
 
-    public String returnStringValue(org.apache.poi.ss.usermodel.Cell cell) {
-        Debug.print(this,  "stringValue -> type de cellule {0} value {1}", cell.getCellType(), cell);
+    public String returnStringValue(Cell cell) {
+        Debug.print(this, "stringValue -> type de cellule {0} value {1}", cell.getCellType(), cell);
         CellType cellType = cell.getCellType();
 
         switch (cellType) {

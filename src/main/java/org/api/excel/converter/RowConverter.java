@@ -32,9 +32,12 @@ public class RowConverter {
     }
 
     private <T> void setField(T entity, Field field, Cell cell) {
-        Objects.requireNonNull(cell, "cell cannot null !!");
         try {
-            Reflective.setterField(entity, field.getName(), cellConvert.value(field.getAnnotation(Box.class), cell));
+            Object value = null;
+            if (Objects.nonNull(cell)) {
+                value = cellConvert.value(field.getType(), cell);
+            }
+            Reflective.setterField(entity, field.getName(), value);
         } catch (ReflectiveOperationException e) {
             throw new RowConverterException(e);
         }
@@ -44,9 +47,7 @@ public class RowConverter {
         Debug.print(this, "---> Convert row number {0} to class {1} ", row.getRowNum(), tClass.getName());
         try {
             T entity = Reflective.createInstance(tClass);
-            cellModels.forEach(cellModel -> {
-                this.toField(row, entity, cellModel.getAnnotation(), cellModel.getField());
-            });
+            cellModels.forEach(cellModel -> this.toField(row, entity, cellModel.getAnnotation(), cellModel.getField()));
             Debug.print(this, "{0}", ReflectionToStringBuilder.toString(entity, ToStringStyle.SHORT_PREFIX_STYLE));
             return entity;
         } catch (ReflectiveOperationException e) {

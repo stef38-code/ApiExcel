@@ -27,7 +27,6 @@ class AnnotationBoxTest {
         Field fieldName = fields.get(0);
         assertThat(fieldName.getName()).isEqualTo("name");
         assertThat(fieldName.getAnnotation(Box.class).number()).isZero();
-        assertThat(fieldName.getAnnotation(Box.class).stringFormat()).isFalse();
     }
 
     @Test
@@ -41,12 +40,10 @@ class AnnotationBoxTest {
         Field fieldFirstName = fields.get(0);
         assertThat(fieldFirstName.getName()).isEqualTo("firstname");
         assertThat(fieldFirstName.getAnnotation(Box.class).number()).isEqualTo(12);
-        assertThat(fieldFirstName.getAnnotation(Box.class).stringFormat()).isTrue();
 
         Field fieldLastName = fields.get(1);
         assertThat(fieldLastName.getName()).isEqualTo("lastname");
         assertThat(fieldLastName.getAnnotation(Box.class).number()).isEqualTo(13);
-        assertThat(fieldLastName.getAnnotation(Box.class).stringFormat()).isFalse();
     }
     private static class NotAnnotation {
         private String name;
@@ -57,7 +54,7 @@ class AnnotationBoxTest {
     }
 
     private static class ChangeValues{
-        @Box(number=12,stringFormat = true)
+        @Box(number=12)
         private String firstname;
         @Box(number=13)
         private String lastname;

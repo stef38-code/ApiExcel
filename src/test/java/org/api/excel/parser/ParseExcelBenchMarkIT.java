@@ -47,7 +47,7 @@ class ParseExcelBenchMarkIT {
         //Vérifier la sortie (then)
         String excelFile = FileUtil.getAbsolutePath(file);
         //Une action se produit (when)
-        Optional<List<Bench>> list = ParseExcel.clazz(Bench.class)
+        Optional<List<Bench>> list = ParseExcel.read(Bench.class)
                 .file(excelFile)
                 .build();
         //
