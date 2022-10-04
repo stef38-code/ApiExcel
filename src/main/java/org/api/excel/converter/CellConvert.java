@@ -19,9 +19,12 @@ public class CellConvert {
 
     public static CellConvert getInstance() {
         if (Objects.isNull(instance)) {
-            instance = new CellConvert();
+            synchronized (CellConvert.class) {
+                if (instance == null) {
+                    instance = new CellConvert();
+                }
+            }
         }
-
         return instance;
     }
 
@@ -30,7 +33,9 @@ public class CellConvert {
     }
 
     private Object returnValue(Cell cell) {
-
+        if (Objects.isNull(cell)) {
+            return null;
+        }
         CellType cellType = cell.getCellType();
         switch (cellType) {
             case NUMERIC:

@@ -25,18 +25,18 @@ public class RowConverter {
 
     public static RowConverter getInstance() {
         if (Objects.isNull(instance)) {
-            instance = new RowConverter();
+            synchronized (RowConverter.class) {
+                if (instance == null) {
+                    instance = new RowConverter();
+                }
+            }
         }
-
         return instance;
     }
 
     private <T> void setField(T entity, Field field, Cell cell) {
         try {
-            Object value = null;
-            if (Objects.nonNull(cell)) {
-                value = cellConvert.value(field.getType(), cell);
-            }
+            Object value = cellConvert.value(field.getType(), cell);
             Reflective.setterField(entity, field.getName(), value);
         } catch (ReflectiveOperationException e) {
             throw new RowConverterException(e);

@@ -1,6 +1,7 @@
 package org.api.excel.file;
 
 import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.api.excel.annotations.Page;
@@ -25,7 +26,7 @@ public class Excel {
         }
     }
 
-    public static org.apache.poi.ss.usermodel.Sheet getSheetSelected(Page page, Workbook workbook) {
+    public static Sheet getSheetSelected(Page page, Workbook workbook) {
         Objects.requireNonNull(page, "ExcelSheet cannot be null");
 
         if (page.name().isBlank())
