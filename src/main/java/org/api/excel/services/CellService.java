@@ -5,7 +5,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.api.excel.annotations.Box;
 import org.api.excel.annotations.BoxBuilder;
 import org.api.excel.model.CellModel;
-import org.api.excel.utils.Info;
+import org.api.excel.utils.Debug;
 
 import java.util.Iterator;
 import java.util.Optional;
@@ -30,11 +30,11 @@ public class CellService {
         Optional<Cell> optionalCell = getStream(cells).filter(cell ->
                 StringUtils.equalsIgnoreCase(cell.getStringCellValue(), name)
         ).findFirst();
-        if (optionalCell.isPresent()) {
-            Cell cell = optionalCell.get();
-            Info.print(this, "Remplace annotation [{0},{1}] par [{3},{2}]", name, box.number(), cell.getColumnIndex(), cell.getStringCellValue());
-            return CellModel.duplique(cellModel).annotation(getAnnotation(box, cell)).build();
-        }
-        return cellModel;
+        return optionalCell.map(
+                cell -> {
+                    Debug.print(this, "Remplace annotation [{0},{1}] par [{3},{2}]", name, box.number(), cell.getColumnIndex(), cell.getStringCellValue());
+                    return CellModel.duplique(cellModel).annotation(getAnnotation(box, cell)).build();
+                }
+        ).orElse(cellModel);
     }
 }

@@ -1,17 +1,30 @@
 package org.api.excel.parser.builder;
 
+import org.api.excel.converter.RowConverter;
+import org.api.excel.services.CellService;
 import org.api.excel.services.FileService;
+import org.api.excel.services.RowsService;
+import org.api.excel.services.WorkbookService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public final class ReaderExcel<T> {
-    private final FileService<T> fileService = new FileService<>();
+    private final FileService<T> fileService;
+    private final WorkbookService<T> workbookService;
     private final List<String> files;
+    private final RowsService rowsService;
+    private final RowConverter rowConverter;
+    private final CellService cellService;
     private Class<T> tClass;
 
     public ReaderExcel() {
+        this.rowsService = new RowsService();
+        this.rowConverter = RowConverter.getInstance();
+        this.cellService = new CellService();
+        this.workbookService = new WorkbookService<>(rowsService, rowConverter, cellService);
+        this.fileService = new FileService<>(workbookService);
         this.files = new ArrayList<>();
     }
 

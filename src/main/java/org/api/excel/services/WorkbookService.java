@@ -24,9 +24,13 @@ public class WorkbookService<T> {
     private final CellService cellService;
 
     public WorkbookService() {
-        this.rowsService = new RowsService();
-        this.cellService = new CellService();
-        this.rowConverter = RowConverter.getInstance();
+        this(new RowsService(), RowConverter.getInstance(), new CellService());
+    }
+
+    public WorkbookService(RowsService rowsService, RowConverter rowConverter, CellService cellService) {
+        this.rowsService = rowsService;
+        this.rowConverter = rowConverter;
+        this.cellService = cellService;
     }
 
     public Optional<List<T>> execute(SheetModel sheetModel, String file, Class<T> aClass) {
@@ -70,23 +74,23 @@ public class WorkbookService<T> {
         List<CellModel> cellModelCorrecte = new ArrayList<>();
         cellModels.forEach(
                 cellModel ->
-                    //Recherche si une colonne contient le nom définit
-                    cellModelCorrecte.add(cellService.findPosition(cellModel, row.cellIterator()))
+                        //Recherche si une colonne contient le nom définit
+                        cellModelCorrecte.add(cellService.findPosition(cellModel, row.cellIterator()))
 
         );
         return cellModelCorrecte;
     }
 
     private Optional<List<T>> readDataRows(Iterator<Row> rowIterator, int rowNumber, Class<T> tClass, List<CellModel> cellModels) {
-        List<Row> rows = rowsService.extractDataRows(rowIterator,rowNumber );
+        List<Row> rows = rowsService.extractDataRows(rowIterator, rowNumber);
         Info.print(this, "---> Read rows and convert to class {0} ", tClass.getName());
         List<T> values = new ArrayList<>();
         rows.forEach(
                 row ->
-                      values.add(rowConverter.toClass(row, tClass, cellModels))
+                        values.add(rowConverter.toClass(row, tClass, cellModels))
 
         );
-       return Return.byDefaultOptionalEmpty(values);
+        return Return.byDefaultOptionalEmpty(values);
     }
 
 }
