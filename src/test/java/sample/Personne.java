@@ -1,12 +1,13 @@
 package sample;
 
-import org.api.excel.annotations.Box;
-import org.api.excel.annotations.Page;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.api.excel.core.annotations.Box;
+import org.api.excel.core.annotations.Page;
 
 @Page(name = "Feuil1")
 public class Personne {
 
-    @Box( name = "name", number = 99999)
+    @Box( name = "name")
     private String name;
     @Box(number = 1, name = "company")
     private String company;
@@ -65,5 +66,17 @@ public class Personne {
 
     public void setGuid(String guid) {
         this.guid = guid;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("name", name)
+                .append("company", company)
+                .append("address", address)
+                .append("postalZip", postalZip)
+                .append("city", city)
+                .append("guid", guid)
+                .toString();
     }
 }

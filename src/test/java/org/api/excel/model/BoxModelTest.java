@@ -1,7 +1,8 @@
 package org.api.excel.model;
 
-import org.api.excel.annotations.Box;
-import org.api.excel.annotations.business.AnnotationInClass;
+import org.api.excel.core.annotations.Box;
+import org.api.excel.core.reflection.AnnotationInClass;
+import org.api.excel.model.commun.CellModel;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

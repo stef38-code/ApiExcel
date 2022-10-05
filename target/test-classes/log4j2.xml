@@ -2,10 +2,16 @@
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%-5level] - %msg%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} - [%-5level] - %c{1}:%L - %msg%n"/>
         </Console>
     </Appenders>
     <Loggers>
+        <Logger name="org.api.excel.parser.reader" additivity="false" level="debug">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.api.excel.parser.writer" additivity="false" level="debug">
+            <AppenderRef ref="Console"/>
+        </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>

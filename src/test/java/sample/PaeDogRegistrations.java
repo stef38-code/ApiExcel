@@ -1,8 +1,8 @@
 package sample;
 
-import org.api.excel.annotations.Book;
-import org.api.excel.annotations.Box;
-import org.api.excel.annotations.Page;
+import org.api.excel.core.annotations.Book;
+import org.api.excel.core.annotations.Box;
+import org.api.excel.core.annotations.Page;
 
 @Book(value = {
         @Page(name = "pae_dog_registrations_2019")

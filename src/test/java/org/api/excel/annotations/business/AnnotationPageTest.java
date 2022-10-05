@@ -1,7 +1,8 @@
 package org.api.excel.annotations.business;
 
-import org.api.excel.annotations.Book;
-import org.api.excel.annotations.Page;
+import org.api.excel.core.annotations.Book;
+import org.api.excel.core.annotations.Page;
+import org.api.excel.core.reflection.AnnotationInClass;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

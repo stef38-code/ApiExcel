@@ -1,10 +1,10 @@
 package org.api.excel.mapping;
 
-import org.api.excel.annotations.Box;
-import org.api.excel.annotations.Page;
-import org.api.excel.annotations.Book;
-import org.api.excel.model.CellModel;
-import org.api.excel.model.SheetModel;
+import org.api.excel.core.annotations.Book;
+import org.api.excel.core.annotations.Box;
+import org.api.excel.core.annotations.Page;
+import org.api.excel.model.commun.CellModel;
+import org.api.excel.model.commun.BookModel;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -29,9 +29,9 @@ class ModelMapperTest {
     @Test
     void to() {
         ModelMapper instance = ModelMapper.getInstance();
-        SheetModel model = instance.to(DefaultClass.class);
+        BookModel model = instance.to(DefaultClass.class);
         assertThat(model).isNotNull();
-        Book annotationSheets = model.getAnnotationSheets();
+        Book annotationSheets = model.getAnnotationBook();
         assertThat(annotationSheets.value()).isNotEmpty().hasSize(1);
         Page pageAnnotation = annotationSheets.value()[0];
         assertThat(pageAnnotation).isNotNull().isInstanceOf(Page.class);
