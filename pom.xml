@@ -33,7 +33,8 @@
         <jacoco-maven-plugin.line.minimum>0.00</jacoco-maven-plugin.line.minimum>
         <jacoco-maven-plugin.branch.minimum>0.00</jacoco-maven-plugin.branch.minimum>
         <sonar.exclusions>sample/**/*,tools/**/*</sonar.exclusions>
-        <sonar.dynamic>reuseReports</sonar.dynamic>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
     </properties>
     <dependencies>
         <dependency>
