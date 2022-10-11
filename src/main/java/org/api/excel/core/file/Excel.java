@@ -60,12 +60,12 @@ public class Excel {
         throw new IllegalArgumentException("The specified file is not Excel file");
     }
 
-    public static void write(String excelFilePath, Workbook workbook) {
+    public static void write(String excelFilePath, Workbook workbook) throws ExcelException {
         try (
                 FileOutputStream outputStream = new FileOutputStream(excelFilePath)) {
             workbook.write(outputStream);
         } catch (IOException io) {
-            io.printStackTrace();
+            throw new ExcelException(io);
         }
     }
 
