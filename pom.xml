@@ -38,14 +38,15 @@
         <!-- soanr cloud -->
         <sonar.organization>stef38-code</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco.xml
+        <sonar.coverage.jacoco.xmlReportPaths>${project.reporting.outputDirectory}/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverageReportPaths>${project.reporting.outputDirectory}</sonar.coverageReportPaths>
         <!-- ignore rule sonar -->
         <sonar.issue.ignore.multicriteria>e1</sonar.issue.ignore.multicriteria>
         <sonar.issue.ignore.multicriteria.e1.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e1.ruleKey>
         <sonar.issue.ignore.multicriteria.e1.resourceKey>**/test/**/*.java
         </sonar.issue.ignore.multicriteria.e1.resourceKey>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../target/jacoco.exec
+        <sonar.coverage.jacoco.xmlReportPaths>${project.reporting.outputDirectory}/jacoco.exec
         </sonar.coverage.jacoco.xmlReportPaths>
     </properties>
     <dependencies>
@@ -185,7 +186,7 @@
                             <goal>prepare-agent</goal>
                         </goals>
                         <configuration>
-                            <destFile>${project.build.directory}/coverage-reports/jacoco.exec</destFile>
+                            <destFile>${project.reporting.outputDirectory}/jacoco.exec</destFile>
                             <propertyName>surefireArgLine</propertyName>
                         </configuration>
                     </execution>
@@ -196,7 +197,7 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
-                            <dataFile>${project.build.directory}/coverage-reports/jacoco.exec</dataFile>
+                            <dataFile>${project.reporting.outputDirectory}/jacoco.exec</dataFile>
                             <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
                         </configuration>
                     </execution>
