@@ -2,6 +2,7 @@ package org.api.excel.services.writer;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.api.excel.core.file.Excel;
+import org.api.excel.core.file.ExcelException;
 import org.api.excel.mapping.ModelMapper;
 import org.api.excel.model.commun.BookModel;
 import org.api.excel.core.utils.Conditions;
@@ -35,7 +36,11 @@ public class FileWriterService<T> {
 
         //Nom Sheet
 
-        Excel.write(excelFilePath, workbook);
+        try {
+            Excel.write(excelFilePath, workbook);
+        } catch (ExcelException e) {
+            throw new FileWriterServiceException(e);
+        }
     }
 
 }
