@@ -1,6 +1,7 @@
 package org.api.excel.annotations.business;
 
-import org.api.excel.annotations.Box;
+import org.api.excel.core.annotations.Box;
+import org.api.excel.core.reflection.AnnotationInClass;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;

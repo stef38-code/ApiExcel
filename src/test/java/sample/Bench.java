@@ -1,7 +1,7 @@
 package sample;
 
-import org.api.excel.annotations.Box;
-import org.api.excel.annotations.Page;
+import org.api.excel.core.annotations.Box;
+import org.api.excel.core.annotations.Page;
 
 @Page(name = "Sheet 1")
 public class Bench {

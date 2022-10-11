@@ -1,12 +1,12 @@
 package org.api.excel.mapping;
 
-import org.api.excel.annotations.Box;
-import org.api.excel.annotations.Page;
-import org.api.excel.annotations.Book;
-import org.api.excel.annotations.business.AnnotationInClass;
-import org.api.excel.model.CellModel;
-import org.api.excel.model.SheetModel;
-import org.api.excel.utils.Conditions;
+import org.api.excel.core.annotations.Book;
+import org.api.excel.core.annotations.Box;
+import org.api.excel.core.annotations.Page;
+import org.api.excel.core.reflection.AnnotationInClass;
+import org.api.excel.model.commun.CellModel;
+import org.api.excel.model.commun.BookModel;
+import org.api.excel.core.utils.Conditions;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -28,7 +28,7 @@ public class ModelMapper {
         return instance;
     }
 
-    public SheetModel to(Class<?> clazz) {
+    public BookModel to(Class<?> clazz) {
         Optional<Page> annotationSheet = AnnotationInClass.getClassAnnotation(clazz, Page.class);
         Optional<Book> annotationSheets = AnnotationInClass.getClassAnnotation(clazz, Book.class);
         Optional<List<Field>> fieldContainAnnotation = AnnotationInClass.getFieldContainAnnotation(clazz, Box.class);
@@ -39,7 +39,7 @@ public class ModelMapper {
         //
         Conditions.requireNonNull(fieldContainAnnotation, "No fields found with ExcelCell annotation");
         //
-        return SheetModel.annotationSheets(annotationSheets.orElse(null))
+        return BookModel.annotationSheets(annotationSheets.orElse(null))
                 .sheetAnnotation(annotationSheet.orElse(null))
                 .cellModels(
                         to(fieldContainAnnotation.orElse(null))).build();
