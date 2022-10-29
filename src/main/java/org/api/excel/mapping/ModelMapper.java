@@ -4,9 +4,9 @@ import org.api.excel.core.annotations.Book;
 import org.api.excel.core.annotations.Box;
 import org.api.excel.core.annotations.Page;
 import org.api.excel.core.reflection.AnnotationInClass;
-import org.api.excel.model.commun.CellModel;
-import org.api.excel.model.commun.BookModel;
 import org.api.excel.core.utils.Conditions;
+import org.api.excel.model.commun.BookModel;
+import org.api.excel.model.commun.CellModel;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -29,24 +29,27 @@ public class ModelMapper {
     }
 
     public BookModel to(Class<?> clazz) {
-        Optional<Page> annotationSheet = AnnotationInClass.getClassAnnotation(clazz, Page.class);
-        Optional<Book> annotationSheets = AnnotationInClass.getClassAnnotation(clazz, Book.class);
+        Optional<Page> pageAnnotationSheet = AnnotationInClass.getClassAnnotation(clazz, Page.class);
+        Optional<Book> bookAnnotationSheets = AnnotationInClass.getClassAnnotation(clazz, Book.class);
         Optional<List<Field>> fieldContainAnnotation = AnnotationInClass.getFieldContainAnnotation(clazz, Box.class);
         //deux present ou les deux absents
-        if (annotationSheet.isPresent() == annotationSheets.isPresent()) {
+        if (pageAnnotationSheet.isPresent() == bookAnnotationSheets.isPresent()) {
             throw new ModelMapperException("ExcelSheet or ExcelSheets mandatory");
         }
         //
         Conditions.requireNonNull(fieldContainAnnotation, "No fields found with ExcelCell annotation");
         //
-        return BookModel.annotationSheets(annotationSheets.orElse(null))
-                .sheetAnnotation(annotationSheet.orElse(null))
+        List<CellModel> cellModels = to(fieldContainAnnotation.orElse(null));
+        if (bookAnnotationSheets.isPresent()) {
+            return BookModel.aNew().bookAnnotationSheet(bookAnnotationSheets.get()).cellModels(cellModels).create();
+        }
+        return BookModel.aNew().pageAnnotationSheet(pageAnnotationSheet.get())
                 .cellModels(
-                        to(fieldContainAnnotation.orElse(null))).build();
+                        cellModels).create();
     }
 
     private CellModel to(Field field) {
-        return CellModel.builder().field(field).build();
+        return CellModel.aNew().field(field).create();
     }
 
     private List<CellModel> to(List<Field> fields) {

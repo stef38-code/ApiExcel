@@ -20,7 +20,7 @@ class BoxModelTest {
      */
     @Test
     void build_then_noProperties_when_NullPointerException() {
-        Assertions.assertThatThrownBy(CellModel.builder()::build)
+        Assertions.assertThatThrownBy(CellModel.aNew().field(null)::create)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("the field cannot is null");
     }
@@ -35,7 +35,7 @@ class BoxModelTest {
     @Test
     void build_then_fieldNotAnnotation_when_NullPointerException() throws NoSuchFieldException {
         Field actualField = MyClass.class.getField("name");
-        Assertions.assertThatThrownBy(CellModel.builder().field(actualField)::build)
+        Assertions.assertThatThrownBy(CellModel.aNew().field(actualField)::create)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("the annotation cannot is null");
     }
@@ -53,7 +53,7 @@ class BoxModelTest {
         Assertions.assertThat(fieldContainAnnotation).isPresent().containsInstanceOf(List.class);
         List<Field> fields = fieldContainAnnotation.get();
         Assertions.assertThat(fields).isNotEmpty().hasSize(1);
-        CellModel build = CellModel.builder().field(fields.get(0)).build();
+        CellModel build = CellModel.aNew().field(fields.get(0)).create();
         Assertions.assertThat(build.getAnnotation()).isNotNull().isInstanceOf(Box.class);
         Assertions.assertThat(build.getField()).isNotNull();
     }

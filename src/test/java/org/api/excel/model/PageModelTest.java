@@ -21,7 +21,7 @@ class PageModelTest {
      */
     @Test
     void build_then_notProperties_when_NullPointerException() {
-        Assertions.assertThatThrownBy(BookModel.annotationSheets(null)::build)
+        Assertions.assertThatThrownBy(BookModel.aNew().pageAnnotationSheet(null).cellModels(Collections.emptyList())::create)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("the annotation cannot is null");
 
@@ -31,12 +31,12 @@ class PageModelTest {
      * Methods under test:
      *
      * <ul>
-     *   <li>{@link BookModel#annotationSheets(Book)#builder()}
+     *   <li>{@link BookModel#aNew#bookAnnotationSheet#cellModels#create()}
      * </ul>
      */
     @Test
     void build_then_sheetAnnotationIsNull_when_NullPointerException() {
-        Assertions.assertThatThrownBy(BookModel.annotationSheets(null).sheetAnnotation(null)::build)
+        Assertions.assertThatThrownBy(BookModel.aNew().bookAnnotationSheet(null).cellModels(Collections.emptyList())::create)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("the annotation cannot is null");
 
@@ -53,7 +53,7 @@ class PageModelTest {
     void build_then_cellModelsIsNull_when_NullPointerException() {
         Optional<Page> classAnnotation = AnnotationInClass.getClassAnnotation(MyClass.class, Page.class);
         Page annotation = classAnnotation.orElse(null);
-        Assertions.assertThatThrownBy(BookModel.annotationSheets(null).sheetAnnotation(annotation)::build)
+        Assertions.assertThatThrownBy(BookModel.aNew().pageAnnotationSheet(annotation).cellModels(null)::create)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("the Collection cannot be null");
 
@@ -71,7 +71,7 @@ class PageModelTest {
         Optional<Page> classAnnotation = AnnotationInClass.getClassAnnotation(MyClass.class, Page.class);
 
         Page annotation = classAnnotation.orElse(null);
-        Assertions.assertThatThrownBy(BookModel.annotationSheets(null).sheetAnnotation(annotation).cellModels(Collections.emptyList())::build)
+        Assertions.assertThatThrownBy(BookModel.aNew().pageAnnotationSheet(annotation).cellModels(Collections.emptyList())::create)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("the Collection cannot be empty");
 

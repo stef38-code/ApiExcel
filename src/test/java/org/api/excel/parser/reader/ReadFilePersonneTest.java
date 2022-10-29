@@ -24,6 +24,15 @@ class ReadFilePersonneTest {
                 .containsInstanceOf(List.class);
         List<Personne> personnes = optional.get();
         assertThat(personnes).isNotEmpty().hasSize(30);
+        Personne personne = personnes.get(0);
+
+        assertThat(personne.getName()).isEqualTo("Kelsie Knowles");
+        assertThat(personne.getCompany()).isEqualTo("Ut Pellentesque Eget Inc.");
+        assertThat(personne.getAddress()).isEqualTo("P.O. Box 206, 4536 In Road");
+        assertThat(personne.getPostalZip()).isEqualTo("62860.0");
+        assertThat(personne.getCity()).isEqualTo("Saint-Louis");
+        assertThat(personne.getGuid()).isEqualTo("1503737E-17EF-4B3E-3B9F-3B73863350DB");
+
     }
 
     @Test

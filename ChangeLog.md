@@ -1,5 +1,9 @@
 # ChangeLog
 
+###
+
+- Change Pattern builder pour Pattern builder Fluent
+
 ## [3.0.0] 2022-10-11
 
     Ajout de la possibilité de créer un fichier excel depuis un liste d'entités

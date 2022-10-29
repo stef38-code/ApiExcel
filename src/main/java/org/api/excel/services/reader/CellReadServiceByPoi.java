@@ -5,8 +5,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.api.excel.core.annotations.Box;
 import org.api.excel.core.annotations.BoxBuilder;
-import org.api.excel.model.commun.CellModel;
 import org.api.excel.core.utils.Debug;
+import org.api.excel.model.commun.CellModel;
 
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +26,7 @@ public class CellReadServiceByPoi implements CellReadService {
     private static Box getAnnotation(Box box, Cell cell) {
         return BoxBuilder.box(box).cell(cell).build();
     }
+
     @Override
     public CellModel findPosition(CellModel cellModel, Iterator<Cell> cells) {
         Box box = cellModel.getAnnotation();
@@ -36,7 +37,7 @@ public class CellReadServiceByPoi implements CellReadService {
         return optionalCell.map(
                 cell -> {
                     Debug.print(this, "Remplace annotation [{0},{1}] par [{3},{2}]", name, box.number(), cell.getColumnIndex(), cell.getStringCellValue());
-                    return CellModel.duplique(cellModel).annotation(getAnnotation(box, cell)).build();
+                    return CellModel.duplicate(cellModel).annotation(getAnnotation(box, cell)).done();
                 }
         ).orElse(cellModel);
     }
@@ -45,6 +46,6 @@ public class CellReadServiceByPoi implements CellReadService {
     public List<CellModel> getCellModelCorrecte(List<CellModel> cellModels, Optional<Row> headerRowOptional) {
         Row row = headerRowOptional.orElseThrow();
         return cellModels.stream().map(
-                cellModel-> findPosition(cellModel, row.cellIterator())).collect(Collectors.toList());
+                cellModel -> findPosition(cellModel, row.cellIterator())).collect(Collectors.toList());
     }
 }

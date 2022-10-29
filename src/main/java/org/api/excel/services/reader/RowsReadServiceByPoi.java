@@ -42,6 +42,7 @@ public class RowsReadServiceByPoi<T> implements RowsReadService<T> {
         return getStream(rows).filter(row -> row.getRowNum() == (rowNumber - 1)).findFirst();
 
     }
+
     public Optional<List<T>> execute(Class<T> aClass, Page annotationPage, Sheet sheet, List<CellModel> cellModels) {
         Info.print(this, "------------------------execute-------------------------------");
         //Entete
@@ -52,9 +53,11 @@ public class RowsReadServiceByPoi<T> implements RowsReadService<T> {
         //Traietement des datas
         return readDataRows(sheet, annotationPage, aClass, cellModelCorrecte);
     }
+
     private Optional<List<T>> readDataRows(Sheet sheet, Page annotationPage, Class<T> tClass, List<CellModel> cellModels) {
         List<Row> rows = extractDataRows(sheet.rowIterator(), annotationPage.rowNumber());
         List<T> values = rows.parallelStream().map(row -> rowConverter.toClass(row, tClass, cellModels)).collect(Collectors.toList());
+        //List<T> values = rows.stream().map(row -> rowConverter.toClass(row, tClass, cellModels)).collect(Collectors.toList());
         return Return.byDefaultOptionalEmpty(values);
     }
 }

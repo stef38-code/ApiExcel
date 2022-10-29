@@ -21,13 +21,13 @@ class ReaderFilePaeDogRegistrationsTest {
         //Vérifier la sortie (then)
         assertThat(optional).isPresent()
                 .containsInstanceOf(List.class);
-        List<PaeDogRegistrations> personnes = optional.get();
-        assertThat(personnes).isNotEmpty().hasSize(14567);
-        assertRowValue(personnes.get(0), "Sheldon", "Non-Standard - Concession", "German Shepherd Dog", "Black", "M", "N", "NORTH HAVEN");
-        assertRowValue(personnes.get(99), "Bella", "Standard - Both desexed & microchipped", "Labrador Retriever", "Gold", "F", "Y", "NORTH HAVEN");
-        assertRowValue(personnes.get(342), "Alyx", "Standard - Both desexed & microchipped", "Australian Shepherd", "Tri Colour", "F", "Y", "NORTH HAVEN");
-        assertRowValue(personnes.get(9354), "Rudie", "Standard - Concession", "Australian Cattle Dog", "Blue", "M", "Y", "DEVON PARK");
-        assertRowValue(personnes.get(14566), "Violet", "Standard - Both desexed & microchipped", "Dachshund (Miniature)", "Black", "F", "Y", "GREENACRES");
+        List<PaeDogRegistrations> dogs = optional.get();
+        assertThat(dogs).isNotEmpty().hasSize(14567);
+        assertRowValue(dogs.get(0), "Sheldon", "Non-Standard - Concession", "German Shepherd Dog", "Black", "M", "N", "NORTH HAVEN");
+        assertRowValue(dogs.get(99), "Bella", "Standard - Both desexed & microchipped", "Labrador Retriever", "Gold", "F", "Y", "NORTH HAVEN");
+        assertRowValue(dogs.get(342), "Alyx", "Standard - Both desexed & microchipped", "Australian Shepherd", "Tri Colour", "F", "Y", "NORTH HAVEN");
+        assertRowValue(dogs.get(9354), "Rudie", "Standard - Concession", "Australian Cattle Dog", "Blue", "M", "Y", "DEVON PARK");
+        assertRowValue(dogs.get(14566), "Violet", "Standard - Both desexed & microchipped", "Dachshund (Miniature)", "Black", "F", "Y", "GREENACRES");
 
     }
 
