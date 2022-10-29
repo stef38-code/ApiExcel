@@ -112,3 +112,5 @@ fabric.properties
 /target/
 /.idea/inspectionProfiles/Project_Default.xml
 /first.xlsx
+/.idea/sonarlint-state.xml
+/.idea/sonarlint.xml
