@@ -73,11 +73,9 @@ public class CellModel {
 
     private static class StepCellModel implements StepField, StepBuilderAnnotation {
         private Field field;
-        private Box annotation;
 
         @Override
         public StepCellModel field(Field field) {
-            this.annotation = field.getAnnotation(Box.class);
             this.field = field;
             return this;
         }
@@ -85,8 +83,9 @@ public class CellModel {
         @Override
         public CellModel create() {
             Objects.requireNonNull(this.field, "the field cannot is null");
-            Objects.requireNonNull(this.annotation, "the annotation cannot is null");
-            return new CellModel(this.field, this.annotation);
+            Box annotation = field.getAnnotation(Box.class);
+            Objects.requireNonNull(annotation, "the annotation cannot is null");
+            return new CellModel(this.field, annotation);
         }
     }
 
