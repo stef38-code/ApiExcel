@@ -9,24 +9,40 @@ public class BoxBuilder {
 
     }
 
-    public static Builder box(Box boxOld) {
-        return new Builder(boxOld);
+    public static BoxStep aNew() {
+        return new StepBoxBuilder();
     }
 
-    public static final class Builder {
+    public interface BoxStep {
+        CellStep box(Box boxOld);
+    }
+
+    public interface CellStep {
+        CreateStep cell(Cell cell);
+    }
+
+    public interface CreateStep {
+        Box create();
+    }
+
+    private static class StepBoxBuilder implements BoxStep, CellStep, CreateStep {
         private Cell cell;
         private Box boxOld;
 
-        private Builder(Box boxOld) {
+        @Override
+        public CellStep box(Box boxOld) {
             this.boxOld = boxOld;
+            return this;
         }
 
-        public Builder cell(Cell cell) {
+        @Override
+        public CreateStep cell(Cell cell) {
             this.cell = cell;
             return this;
         }
 
-        public Box build() {
+        @Override
+        public Box create() {
             return new Box() {
 
                 @Override

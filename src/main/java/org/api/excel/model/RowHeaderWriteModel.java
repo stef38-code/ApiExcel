@@ -1,61 +1,67 @@
 package org.api.excel.model;
 
-import org.apache.commons.collections4.MapUtils;
 import org.api.excel.core.annotations.Box;
-import org.api.excel.model.commun.CellModel;
 import org.api.excel.core.utils.Conditions;
+import org.api.excel.model.commun.CellModel;
 
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class RowHeaderWriteModel {
     private final Map<Integer, RowHeaderReader> header;
 
-    private RowHeaderWriteModel(Builder builder) {
-        this.header = builder.header();
+    private RowHeaderWriteModel(Map<Integer, RowHeaderReader> header) {
+        this.header = header;
     }
 
-    public static Builder cell(List<CellModel> cellModels) {
-        return new Builder().cells(cellModels);
+
+    public static CellStep aNew() {
+        return new StepRowHeaderReader();
     }
 
     public Map<Integer, RowHeaderReader> getHeader() {
         return header;
     }
 
-    public static class Builder {
+    public interface CellStep {
+        CreateStep cells(List<CellModel> cellModels);
+    }
+
+    public interface CreateStep {
+        RowHeaderWriteModel create();
+    }
+
+    private static class StepRowHeaderReader implements CellStep, CreateStep {
+        private final Map<Integer, RowHeaderReader> header = new HashMap<>();
         private List<CellModel> cellModels;
-        private Map<Integer, RowHeaderReader> header = new HashMap<>();
 
-        public RowHeaderWriteModel build() {
-            Conditions.requireNotEmpty(cellModels);
-            cellModels.forEach(cellReaderModel -> {
-                Box annotation = cellReaderModel.getAnnotation();
-                int number = annotation.number();
-                header.put(number, RowHeaderReader.builder()
-                        .number(number)
-                        .columnName(annotation.name())
-                        .nameField(cellReaderModel.getField().getName())
-                        .build());
-            });
-            return new RowHeaderWriteModel(this);
-        }
-
-        public Builder cells(List<CellModel> cellModels) {
+        @Override
+        public CreateStep cells(List<CellModel> cellModels) {
             this.cellModels = cellModels;
             return this;
         }
 
-        public Map<Integer, RowHeaderReader> header() {
-            if (MapUtils.isNotEmpty(header)) {
-                header.entrySet()
-                        .stream()
-                        .sorted(Map.Entry.<Integer, RowHeaderReader>comparingByKey());
-                return header;
-            }
-            return Collections.emptyMap();
+        @Override
+        public RowHeaderWriteModel create() {
+            Conditions.requireNotEmpty(cellModels);
+            cellModels.forEach(cellReaderModel -> {
+                Box annotation = cellReaderModel.getAnnotation();
+                int number = annotation.number();
+                header.put(number, RowHeaderReader.aNew()
+                        .nameField(cellReaderModel.getField().getName())
+                        .number(number)
+                        .columnName(annotation.name())
+                        .create());
+            });
+            LinkedHashMap<Integer, RowHeaderReader> collectSorted = header.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByKey()).
+                    collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                            (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+            return new RowHeaderWriteModel(collectSorted);
         }
     }
 }

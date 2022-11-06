@@ -8,13 +8,13 @@ public class SheetWriterModel {
     private final String name;
     private final int rowNumber;
 
-    private SheetWriterModel(Builder builder) {
-        this.name = builder.name();
-        this.rowNumber = builder.rowNumber();
+    private SheetWriterModel(String name, int rowNumber) {
+        this.name = name;
+        this.rowNumber = rowNumber;
     }
 
-    public static Builder pages(Page[] pages) {
-        return new Builder().pages(pages);
+    public static PagesStep aNew() {
+        return new StepSheetWriterModel();
     }
 
     public String getName() {
@@ -25,37 +25,28 @@ public class SheetWriterModel {
         return rowNumber;
     }
 
-    public static final class Builder {
+    public interface CreateStep {
+        SheetWriterModel create();
+    }
+
+    public interface PagesStep {
+        CreateStep pages(Page[] pages);
+    }
+
+    private static class StepSheetWriterModel implements PagesStep, CreateStep {
         private Page[] pages;
-        private Page page;
 
-        private Builder() {
-
+        @Override
+        public SheetWriterModel create() {
+            Page page = validatePage(pages);
+            String name = nameSheetWithPageAnnotation(page);
+            return new SheetWriterModel(name, page.rowNumber());
         }
 
-        private String name() {
-            return nameSheetWithPageAnnotation(page);
-        }
-
-        private int rowNumber() {
-            return page.rowNumber();
-        }
-
-        public Builder pages(Page[] pages) {
+        @Override
+        public CreateStep pages(Page[] pages) {
             this.pages = pages;
             return this;
-        }
-
-        public SheetWriterModel build() {
-            page = validatePage(pages);
-            return new SheetWriterModel(this);
-        }
-
-        private String nameSheetWithPageAnnotation(Page page) {
-            if (Strings.isNotBlank(page.name())) {
-                return page.name();
-            }
-            return "Sheet ".concat(String.valueOf(page.number()));
         }
 
         private Page validatePage(Page[] pages) {
@@ -66,5 +57,13 @@ public class SheetWriterModel {
             }
             return pages[0];
         }
+
+        private String nameSheetWithPageAnnotation(Page page) {
+            if (Strings.isNotBlank(page.name())) {
+                return page.name();
+            }
+            return "Sheet ".concat(String.valueOf(page.number()));
+        }
     }
+
 }

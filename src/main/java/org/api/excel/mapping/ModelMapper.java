@@ -43,7 +43,8 @@ public class ModelMapper {
         if (bookAnnotationSheets.isPresent()) {
             return BookModel.aNew().bookAnnotationSheet(bookAnnotationSheets.get()).cellModels(cellModels).create();
         }
-        return BookModel.aNew().pageAnnotationSheet(pageAnnotationSheet.get())
+        return BookModel.aNew()
+                .pageAnnotationSheet(pageAnnotationSheet.orElseThrow())
                 .cellModels(
                         cellModels).create();
     }

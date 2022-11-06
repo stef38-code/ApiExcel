@@ -42,7 +42,7 @@ class SheetWriterModelTest {
      * Methods under test:
      * Exception
      * <ul>
-     *   <li>{@link SheetWriterModel#pages(Page[])#build()}
+     *   <li>{@link SheetWriterModel#aNew#pages(Page[])#create()}
      *   <li>{@link SheetWriterModel#getName()}
      *   <li>{@link SheetWriterModel#getRowNumber()}
      * </ul>
@@ -51,7 +51,7 @@ class SheetWriterModelTest {
     void build_then_nullPages_when_Exception() {
 
         Page[] pages = null;
-        Assertions.assertThatThrownBy(SheetWriterModel.pages(pages)::build)
+        Assertions.assertThatThrownBy(SheetWriterModel.aNew().pages(pages)::create)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("the Collection cannot be null");
     }
@@ -60,7 +60,7 @@ class SheetWriterModelTest {
      * Methods under test:
      * Exception
      * <ul>
-     *   <li>{@link SheetWriterModel#pages(Page[])#build()}
+     *   <li>{@link SheetWriterModel#aNew#pages(Page[])#create()}
      *   <li>{@link SheetWriterModel#getName()}
      *   <li>{@link SheetWriterModel#getRowNumber()}
      * </ul>
@@ -70,7 +70,7 @@ class SheetWriterModelTest {
         Page page = getPage(0, "Personnes", 12);
         Page page1 = getPage(3, Strings.EMPTY, 45);
         Page[] pages = new Page[]{page, page1};
-        Assertions.assertThatThrownBy(SheetWriterModel.pages(pages)::build)
+        Assertions.assertThatThrownBy(SheetWriterModel.aNew().pages(pages)::create)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Page array size not equal 1");
     }
@@ -79,7 +79,7 @@ class SheetWriterModelTest {
      * Methods under test:
      * Sheet name is name propertie
      * <ul>
-     *   <li>{@link SheetWriterModel#pages(Page[])#build()}
+     *   <li>{@link SheetWriterModel#aNew#pages(Page[])#create()}
      *   <li>{@link SheetWriterModel#getName()}
      *   <li>{@link SheetWriterModel#getRowNumber()}
      * </ul>
@@ -90,7 +90,7 @@ class SheetWriterModelTest {
         Page page = getPage(0, "Personnes", 12);
 
         //Une action se produit (when)
-        SheetWriterModel actual = SheetWriterModel.pages(new Page[]{page}).build();
+        SheetWriterModel actual = SheetWriterModel.aNew().pages(new Page[]{page}).create();
         assertThat(actual.getName()).hasToString("Personnes");
         assertThat(actual.getRowNumber()).isEqualTo(12);
     }
@@ -100,7 +100,7 @@ class SheetWriterModelTest {
      * Generate sheet name
      *
      * <ul>
-     *   <li>{@link SheetWriterModel#pages(Page[])#build()}
+     *   <li>{@link SheetWriterModel#aNew#pages(Page[])#create()}
      *   <li>{@link SheetWriterModel#getName()}
      *   <li>{@link SheetWriterModel#getRowNumber()}
      * </ul>
@@ -110,7 +110,7 @@ class SheetWriterModelTest {
         //Conditions préalables (given)
         Page page = getPage(3, Strings.EMPTY, 45);
         //Une action se produit (when)
-        SheetWriterModel actual = SheetWriterModel.pages(new Page[]{page}).build();
+        SheetWriterModel actual = SheetWriterModel.aNew().pages(new Page[]{page}).create();
         assertThat(actual.getName()).hasToString("Sheet 3");
         assertThat(actual.getRowNumber()).isEqualTo(45);
     }

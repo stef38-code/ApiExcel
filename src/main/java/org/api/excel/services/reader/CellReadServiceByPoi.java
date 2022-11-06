@@ -24,7 +24,7 @@ public class CellReadServiceByPoi implements CellReadService {
     }
 
     private static Box getAnnotation(Box box, Cell cell) {
-        return BoxBuilder.box(box).cell(cell).build();
+        return BoxBuilder.aNew().box(box).cell(cell).create();
     }
 
     @Override

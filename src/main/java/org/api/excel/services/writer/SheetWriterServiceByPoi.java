@@ -17,9 +17,9 @@ public class SheetWriterServiceByPoi<T> implements SheetWriterService<T> {
 
     @Override
     public void execute(Workbook workbook, Book annotationSheets, List<CellModel> cellModels, List<T> entities) {
-        SheetWriterModel sheetWriter = SheetWriterModel.
+        SheetWriterModel sheetWriter = SheetWriterModel.aNew().
                 pages(annotationSheets.value())
-                .build();
+                .create();
         Sheet sheet = workbook.createSheet(sheetWriter.getName());
         rowsWriteService.execute(sheetWriter, sheet, cellModels, entities);
         //Definition du header

@@ -9,17 +9,17 @@ import java.util.List;
 
 public class WorkbookWriterServiceByPoi<T> implements WorkbookWriterService<T> {
 
-    private final SheetWriterService sheetWriterServiceByPoi;
+    private final SheetWriterService<T> sheetWriterServiceByPoi;
 
-    public WorkbookWriterServiceByPoi(SheetWriterService sheetWriterServiceByPoi) {
+    public WorkbookWriterServiceByPoi(SheetWriterService<T> sheetWriterServiceByPoi) {
         this.sheetWriterServiceByPoi = sheetWriterServiceByPoi;
     }
 
     @Override
-    public <T> void execute(Workbook workbook, BookModel bookModel,List<T> entities) {
+    public void execute(Workbook workbook, BookModel bookModel, List<T> entities) {
         Book annotationSheets = bookModel.getAnnotationBook();
         List<CellModel> cellModels = bookModel.getCellModels();
-        sheetWriterServiceByPoi.execute(workbook, annotationSheets, cellModels,entities);
+        sheetWriterServiceByPoi.execute(workbook, annotationSheets, cellModels, entities);
 
     }
 
