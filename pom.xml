@@ -38,16 +38,17 @@
         <!-- soanr cloud -->
         <sonar.organization>stef38-code</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.reporting.outputDirectory}/jacoco.xml
-        </sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.jacoco.reportPaths>${project.reporting.outputDirectory}/jacoco.xml</sonar.jacoco.reportPaths>
+        <!--        <sonar.coverage.jacoco.xmlReportPaths>${project.reporting.outputDirectory}/jacoco.xml
+                </sonar.coverage.jacoco.xmlReportPaths>-->
         <sonar.coverageReportPaths>${project.reporting.outputDirectory}</sonar.coverageReportPaths>
         <!-- ignore rule sonar -->
         <sonar.issue.ignore.multicriteria>e1</sonar.issue.ignore.multicriteria>
         <sonar.issue.ignore.multicriteria.e1.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e1.ruleKey>
         <sonar.issue.ignore.multicriteria.e1.resourceKey>**/test/**/*.java
         </sonar.issue.ignore.multicriteria.e1.resourceKey>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.reporting.outputDirectory}/jacoco.exec
-        </sonar.coverage.jacoco.xmlReportPaths>
+        <!--        <sonar.coverage.jacoco.xmlReportPaths>${project.reporting.outputDirectory}/jacoco.exec
+                </sonar.coverage.jacoco.xmlReportPaths>-->
     </properties>
     <dependencies>
         <dependency>
