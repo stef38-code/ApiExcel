@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.api.excel.core.annotations.Box;
-import org.api.excel.core.annotations.BoxBuilder;
+import org.api.excel.core.annotations.builder.BoxBuilder;
 import org.api.excel.core.utils.Debug;
 import org.api.excel.model.commun.CellModel;
 
