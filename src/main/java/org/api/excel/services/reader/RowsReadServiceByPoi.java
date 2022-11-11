@@ -57,7 +57,6 @@ public class RowsReadServiceByPoi<T> implements RowsReadService<T> {
     private Optional<List<T>> readDataRows(Sheet sheet, Page annotationPage, Class<T> tClass, List<CellModel> cellModels) {
         List<Row> rows = extractDataRows(sheet.rowIterator(), annotationPage.rowNumber());
         List<T> values = rows.parallelStream().map(row -> rowConverter.toClass(row, tClass, cellModels)).collect(Collectors.toList());
-        //List<T> values = rows.stream().map(row -> rowConverter.toClass(row, tClass, cellModels)).collect(Collectors.toList());
         return Return.byDefaultOptionalEmpty(values);
     }
 }

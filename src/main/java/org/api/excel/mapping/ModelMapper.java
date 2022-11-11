@@ -41,9 +41,10 @@ public class ModelMapper {
         //
         List<CellModel> cellModels = to(fieldContainAnnotation.orElse(null));
         if (bookAnnotationSheets.isPresent()) {
-            return BookModel.aNew().bookAnnotationSheet(bookAnnotationSheets.get()).cellModels(cellModels).create();
+            return BookModel.aNew().book(bookAnnotationSheets.get()).cellModels(cellModels).create();
         }
-        return BookModel.aNew().pageAnnotationSheet(pageAnnotationSheet.get())
+        return BookModel.aNew()
+                .page(pageAnnotationSheet.orElseThrow())
                 .cellModels(
                         cellModels).create();
     }

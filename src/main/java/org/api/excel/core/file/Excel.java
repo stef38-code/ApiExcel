@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.api.excel.core.annotations.Page;
 import org.api.excel.core.utils.Conditions;
 import org.api.excel.core.utils.Info;
@@ -43,7 +43,11 @@ public class Excel {
     public static void close(Workbook workbook) throws ExcelException {
         Objects.requireNonNull(workbook, "Workbook cannot be null");
         try {
-            workbook.close();
+            if (workbook instanceof SXSSFWorkbook) {
+                ((SXSSFWorkbook) workbook).dispose();
+            } else {
+                workbook.close();
+            }
         } catch (IOException e) {
             throw new ExcelException(e);
         }
@@ -53,7 +57,7 @@ public class Excel {
 
 
         if (excelFilePath.endsWith("xlsx")) {
-            return new XSSFWorkbook();
+            return new SXSSFWorkbook(1000);
         } else if (excelFilePath.endsWith("xls")) {
             return new HSSFWorkbook();
         }

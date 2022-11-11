@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.api.excel.core.annotations.Box;
-import org.api.excel.core.annotations.BoxBuilder;
+import org.api.excel.core.annotations.builder.BoxBuilder;
 import org.api.excel.core.utils.Debug;
 import org.api.excel.model.commun.CellModel;
 
@@ -24,7 +24,7 @@ public class CellReadServiceByPoi implements CellReadService {
     }
 
     private static Box getAnnotation(Box box, Cell cell) {
-        return BoxBuilder.box(box).cell(cell).build();
+        return BoxBuilder.aNew().box(box).cell(cell).create();
     }
 
     @Override

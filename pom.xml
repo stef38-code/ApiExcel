@@ -38,16 +38,17 @@
         <!-- soanr cloud -->
         <sonar.organization>stef38-code</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.reporting.outputDirectory}/jacoco.xml
-        </sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.jacoco.reportPaths>${project.reporting.outputDirectory}/jacoco.xml</sonar.jacoco.reportPaths>
+        <!--        <sonar.coverage.jacoco.xmlReportPaths>${project.reporting.outputDirectory}/jacoco.xml
+                </sonar.coverage.jacoco.xmlReportPaths>-->
         <sonar.coverageReportPaths>${project.reporting.outputDirectory}</sonar.coverageReportPaths>
         <!-- ignore rule sonar -->
         <sonar.issue.ignore.multicriteria>e1</sonar.issue.ignore.multicriteria>
         <sonar.issue.ignore.multicriteria.e1.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e1.ruleKey>
         <sonar.issue.ignore.multicriteria.e1.resourceKey>**/test/**/*.java
         </sonar.issue.ignore.multicriteria.e1.resourceKey>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.reporting.outputDirectory}/jacoco.exec
-        </sonar.coverage.jacoco.xmlReportPaths>
+        <!--        <sonar.coverage.jacoco.xmlReportPaths>${project.reporting.outputDirectory}/jacoco.exec
+                </sonar.coverage.jacoco.xmlReportPaths>-->
     </properties>
     <dependencies>
         <dependency>
@@ -207,7 +208,7 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <dataFile>${project.build.directory}/coverage-reports/jacoco.exec</dataFile>
+                            <dataFile>${project.reporting.outputDirectory}/jacoco.exec</dataFile>
                             <rules>
                                 <rule>
                                     <element>BUNDLE</element>
@@ -223,45 +224,6 @@
                         </configuration>
                     </execution>
                 </executions>
-               <!-- <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>check</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <rule>
-                                    <element>CLASS</element>
-                                    <limits>
-                                        <limit>
-                                            <counter>LINE</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>${jacoco-maven-plugin.line.minimum}</minimum>
-                                        </limit>
-                                        <limit>
-                                            <counter>BRANCH</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>${jacoco-maven-plugin.branch.minimum}</minimum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>-->
             </plugin>
         </plugins>
     </build>

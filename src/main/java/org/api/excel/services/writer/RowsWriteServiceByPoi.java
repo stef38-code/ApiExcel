@@ -23,7 +23,7 @@ public class RowsWriteServiceByPoi<T> implements RowsWriteService<T> {
     @Override
     public void execute(SheetWriterModel sheetWriter, Sheet sheet, List<CellModel> cellModels, List<T> entities) {
 
-        RowHeaderWriteModel rowHeaderWriteModel = RowHeaderWriteModel.cell(cellModels).build();
+        RowHeaderWriteModel rowHeaderWriteModel = RowHeaderWriteModel.aNew().cells(cellModels).create();
         int rowNumberHeader = sheetWriter.getRowNumber() - 1;
         Info.print(this, "Sheet name : {0}, header number {1}", sheetWriter.getName(), rowNumberHeader);
         //add header + cell
